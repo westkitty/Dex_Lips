@@ -1,0 +1,10 @@
+# Optional second automatic engine (wav2vec2 phoneme recognizer) and the
+# OpenCV inpaint mouth cover. Large download (torch CPU wheel, ~800 MB installed, + ~1.3 GB model);
+# never required for the manual-cue or Rhubarb routes.
+# CPU-only torch: pip install torch --index-url https://download.pytorch.org/whl/cpu
+-r requirements-ui.txt
+torch>=2.2
+transformers>=4.40
+huggingface_hub>=0.23
+numpy>=1.24
+opencv-python-headless>=4.8
