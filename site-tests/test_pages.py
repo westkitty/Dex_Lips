@@ -8,7 +8,7 @@ import threading
 import tempfile
 import zipfile
 from PIL import Image,ImageDraw
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 
 BASE=Path(__file__).resolve().parents[1]
 ROOT=BASE/'site'
@@ -45,10 +45,10 @@ def main():
         digest=hashlib.sha256(source.read_bytes()).hexdigest()
         page.locator('#sourceInput').set_input_files(str(source))
         page.locator('#generate').wait_for(state='visible')
-        page.wait_for_function('!document.querySelector("#generate").disabled')
+        expect(page.locator('#generate')).to_be_enabled(timeout=15000)
         slider(page,'mouthW','29');slider(page,'mouthH','20');slider(page,'mouthY','61');
         page.locator('#generate').click()
-        page.wait_for_function('document.querySelector("#traceState").textContent === "SOURCE TRACE"')
+        expect(page.locator('#traceState')).to_have_text('SOURCE TRACE',timeout=15000)
         assert 'Nine separate' in page.locator('#message').inner_text()
         assert 'SOURCE TRACE' in page.locator('#traceState').inner_text()
         page.screenshot(path=str(root/'desktop.png'),full_page=True)
@@ -71,7 +71,7 @@ def main():
         slider(page,'mouthX','52')
         assert page.locator('#downloadZip').is_disabled()
         page.locator('#sourceInput').set_input_files(str(fixture(root,blank=True)))
-        page.wait_for_function('!document.querySelector("#generate").disabled')
+        expect(page.locator('#generate')).to_be_enabled(timeout=15000)
         page.locator('#generate').click()
         assert 'No isolated mouth' in page.locator('#message').inner_text()
         assert page.locator('#downloadZip').is_disabled()
@@ -80,7 +80,7 @@ def main():
         assert 'Nine separate mouth sprites' in page.locator('#message').inner_text()
         # Bright mouth on dark facial art.
         page.locator('#sourceInput').set_input_files(str(fixture(root,bright=True)))
-        page.wait_for_function('!document.querySelector("#generate").disabled')
+        expect(page.locator('#generate')).to_be_enabled(timeout=15000)
         page.locator('#mode').select_option('source-faceted')
         page.locator('#contrast').select_option('light')
         slider(page,'mouthX','50')
