@@ -17,6 +17,7 @@ import subprocess
 import zipfile
 
 from PIL import Image, ImageDraw, UnidentifiedImageError
+from .source_geometry import trace_mouth, GeometryTraceError
 
 
 class MouthAssetError(ValueError):
@@ -26,7 +27,7 @@ class MouthAssetError(ValueError):
 IMAGE_EXTS = frozenset({'.png', '.jpg', '.jpeg', '.webp'})
 VIDEO_EXTS = frozenset({'.mp4', '.mov', '.webm', '.mkv'})
 MOUTH_SHAPES = 'XABCDEFGH'
-PRESETS = frozenset({'soft', 'faceted'})
+PRESETS = frozenset({'soft', 'faceted', 'source-soft', 'source-faceted'})
 MAX_SOURCE_BYTES = 40 * 1024 * 1024
 MAX_PIXELS = 35_000_000
 MAX_SPRITE_SIDE = 1024
@@ -153,11 +154,13 @@ def create_draft_mouth_rig(
     source: str | Path, destination: str | Path, *,
     mouth_x: float, mouth_y: float, width_fraction: float = .13,
     height_fraction: float = .065, preset: str = 'soft', frame_time: float = 0.0,
+    contrast: str = 'auto',
 ) -> dict:
     """Create individual editable PNGs + review ZIP, with zero canonical approval.
 
-    The user selects mouth location and relative size; all nine shapes are drawn
-    automatically from that single region. No model, fee, uploads, or face detector.
+    User selects mouth location and relative size. Source modes conservatively
+    trace and warp existing mouth pixels; explicit graphic modes preserve
+    the older colored-polygon/oval route. No model, fee, uploads or face detector.
     """
     source, destination = Path(source), Path(destination)
     if not source.is_file() or source.is_symlink() or not 1 <= source.stat().st_size <= MAX_SOURCE_BYTES:
@@ -179,7 +182,9 @@ def create_draft_mouth_rig(
     if mouth_x - width_fraction / 2 < 0 or mouth_x + width_fraction / 2 > 1 or mouth_y - height_fraction / 2 < 0 or mouth_y + height_fraction / 2 > 1:
         raise MouthAssetError('Mouth region must fit within source frame')
     if preset not in PRESETS:
-        raise MouthAssetError('Mouth style must be soft or faceted')
+        raise MouthAssetError('Mouth style must be soft, faceted, source-soft or source-faceted')
+    if contrast not in ('auto', 'dark', 'light'):
+        raise MouthAssetError('Mouth contrast must be auto, dark or light')
     if destination.exists():
         raise MouthAssetError('Output folder exists; refusing to overwrite prior assets')
     frame, original_w, original_h = _frame(source, frame_time)
@@ -187,13 +192,27 @@ def create_draft_mouth_rig(
     height = max(8, round(height_fraction * original_h))
     if width > MAX_SPRITE_SIDE or height > MAX_SPRITE_SIDE or width * height > 1024 * 1024:
         raise MouthAssetError('Requested mouth asset exceeds 1024px limit; reduce width/height')
-    palette = _color_sample(frame, mouth_x, mouth_y, width_fraction, height_fraction)
+    diagnostic = None
+    trace_report = None
+    if preset.startswith('source-'):
+        try:
+            sprites, diagnostic, trace_report = trace_mouth(
+                frame, x=mouth_x, y=mouth_y,
+                width_fraction=width_fraction, height_fraction=height_fraction,
+                output_size=(width, height), style=preset.removeprefix('source-'),
+                contrast=contrast)
+        except GeometryTraceError as exc:
+            raise MouthAssetError(f'Source-traced mouth unavailable: {exc}') from exc
+    else:
+        palette = _color_sample(frame, mouth_x, mouth_y, width_fraction, height_fraction)
+        sprites = {label: _draw_sprite(width, height, label, preset, palette)
+                   for label in MOUTH_SHAPES}
     destination.mkdir(mode=0o700, parents=False)
     try:
         shapes = {}
         for label in MOUTH_SHAPES:
             path = destination / f'{label}.png'
-            _draw_sprite(width, height, label, preset, palette).save(path, 'PNG')
+            sprites[label].save(path, 'PNG')
             shapes[label] = path.name
         rig = {
             'schema_version': 1, 'character_id': 'generated-draft-review-required',
@@ -201,8 +220,9 @@ def create_draft_mouth_rig(
             'authority': 'generated_draft', 'approved': False,
             'mouth_anchor': {'x': mouth_x, 'y': mouth_y, 'scale': 1.0, 'rotation_deg': 0},
             'shapes': shapes,
-            'notes': ('Deterministic source-palette draft; mouth location and dimensions are user-selected. '
-                      'Not automated anatomy recognition, not canonical approval. Visual review is mandatory.'),
+            'notes': ('Draft mode: ' + preset + '; actual source-traced silhouette only when source-* selected. '
+                      'No anatomy recognition or canonical approval. Visual review is mandatory. '
+                      + (json.dumps(trace_report, sort_keys=True) if trace_report else 'Graphic shapes only.')),
         }
         rig_path = destination / 'rig.json'
         rig_path.write_text(json.dumps(rig, indent=2), encoding='utf-8')
@@ -217,6 +237,10 @@ def create_draft_mouth_rig(
         preview_frame.alpha_composite(patch, dest=at)
         preview_path = destination / 'review_open_D.png'
         preview_frame.save(preview_path, 'PNG')
+        trace_path = None
+        if diagnostic is not None:
+            trace_path = destination / 'review_traced_mouth.png'
+            diagnostic.save(trace_path, 'PNG')
         archive_path = destination.parent / f'{destination.name}_draft_rig.zip'
         if archive_path.exists():
             raise MouthAssetError('Draft rig archive destination already exists')
@@ -229,6 +253,8 @@ def create_draft_mouth_rig(
             'shapes': [str(destination / f'{letter}.png') for letter in MOUTH_SHAPES],
             'source_sha256': source_hash, 'draft_only': True,
             'sprite_dimensions': [width, height], 'preset': preset,
+            'trace_diagnostic': str(trace_path) if trace_path else None,
+            'trace_report': trace_report,
         }
     except Exception:
         # Caller owns bounded job cleanup; never delete the user's source.
