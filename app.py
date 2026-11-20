@@ -116,9 +116,9 @@ def render_uploaded(source_path, audio_path, archive_path, cues_text, keyframe_t
         return None, None, None, f'Render blocked: {exc}'
 
 
-def generate_mouth_assets(source_path, x, y, width, height, style, frame_time):
+def generate_mouth_assets(source_path, x, y, width, height, style, frame_time, contrast):
     if not source_path:
-        return None, None, None, 'Upload a still image or existing video first.'
+        return None, None, None, None, 'Upload a still image or existing video first.'
     prune_expired()
     job = atomic_job_directory()
     try:
@@ -127,20 +127,26 @@ def generate_mouth_assets(source_path, x, y, width, height, style, frame_time):
             source, job / 'generated_mouth_assets',
             mouth_x=float(x), mouth_y=float(y),
             width_fraction=float(width), height_fraction=float(height),
-            preset=str(style), frame_time=float(frame_time),
+            preset=str(style), frame_time=float(frame_time), contrast=str(contrast),
         )
-        return (str(generated['preview']), str(generated['zip']),
-                str(generated['zip']),
-                'Generated X/A-F/G/H transparent draft sprites, preview and rig ZIP. '
-                'X is transparent to retain the existing rest face. Review the preview, '
-                'adjust placement or style, and explicitly approve artwork for this job '
-                'before rendering. This is NOT anatomical recognition, automatic mouth removal, '
-                'or canonical character-art approval.')
+        traced = generated.get('trace_report')
+        trace_description = (
+            f"Source mouth silhouette traced ({traced['contrast']}, diagnostic score {traced['confidence']:.3f}). "
+            "Inspect green traced region and the rendered open-mouth preview. "
+            if traced else
+            "Explicit graphic geometry was used; no source-mouth contour was detected. "
+        )
+        return (str(generated['preview']), generated.get('trace_diagnostic'),
+                str(generated['zip']), str(generated['zip']),
+                trace_description
+                + 'Generated X/A-F/G/H transparent draft sprites. X retains the original rest face. '
+                'Review and approve these sprites FOR THIS JOB ONLY. '
+                'No anatomical certainty, original-mouth removal, or canonical approval is implied.')
     except (MouthAssetError, ProofError, OSError, ValueError, subprocess.TimeoutExpired,
             UnidentifiedImageError, Image.DecompressionBombError) as exc:
         import shutil
         shutil.rmtree(job, ignore_errors=True)
-        return None, None, None, f'Mouth asset generation blocked: {exc}'
+        return None, None, None, None, f'Mouth asset generation blocked: {exc}'
 
 
 
@@ -172,26 +178,31 @@ def build():
             source.change(input_report, [source,audio], [report])
             audio.change(input_report, [source,audio], [report])
             gr.Markdown('### Make mouth assets here (no separate sprites required)\n'
-                        'Select an approximate mouth center and dimensions, choose a source-matched graphic style, '
-                        'then generate nine editable transparent PNGs and a ZIP. Review the open-mouth preview before use. '
-                        'No facial anatomy, teeth or lips are inferred; the result is a proposed overlay, not approval.')
+                        'Select mouth center and dimensions, then choose Source tracing to transform the original mouth silhouette '
+                        'while retaining source colors and asymmetry. Inspect the trace overlay and open-mouth preview. '
+                        'Use Graphic soft/faceted when the source has no traceable mouth. Never assume canon approval.')
             with gr.Row():
                 g_x = gr.Slider(.03,.97,value=.5,step=.005,label='Mouth center X')
                 g_y = gr.Slider(.03,.97,value=.6,step=.005,label='Mouth center Y')
             with gr.Row():
                 g_width = gr.Slider(.02,.35,value=.13,step=.005,label='Mouth width / frame width')
                 g_height = gr.Slider(.015,.25,value=.065,step=.005,label='Mouth height / frame height')
-                g_style = gr.Radio(['soft','faceted'],value='soft',label='Mouth graphic style')
+                g_style = gr.Radio(['source-soft','source-faceted','soft','faceted'],
+                                   value='source-soft',label='Mouth construction mode',
+                                   info='Source modes trace original mouth pixels; plain modes draw graphic alternatives')
                 g_time = gr.Slider(0,30,value=0,step=.1,label='Reference frame second (video only)')
+                g_contrast = gr.Radio(['auto','dark','light'],value='auto',
+                                      label='Source mouth contrast',info='Constrains source tracing; ignored in graphic modes')
             gen_btn = gr.Button('Generate draft mouth assets from source',variant='secondary')
             with gr.Row():
-                gen_preview = gr.Image(label='Source preview with generated open mouth',interactive=False)
-                gen_download = gr.File(label='Download generated mouth rig ZIP')
+                gen_preview = gr.Image(label='Open-mouth pose on source (review)',interactive=False)
+                gen_trace = gr.Image(label='Source pixels selected as mouth (green; source mode)',interactive=False)
+            gen_download = gr.File(label='Download nine-sprite rig ZIP')
             gen_status = gr.Markdown()
             sprite_zip = gr.File(label='Mouth rig ZIP: use generated ZIP or upload your own transparent PNGs', file_types=['.zip'])
             gen_btn.click(generate_mouth_assets,
-                          [source,g_x,g_y,g_width,g_height,g_style,g_time],
-                          [gen_preview,gen_download,sprite_zip,gen_status],concurrency_limit=1)
+                          [source,g_x,g_y,g_width,g_height,g_style,g_time,g_contrast],
+                          [gen_preview,gen_trace,gen_download,sprite_zip,gen_status],concurrency_limit=1)
             with gr.Row():
                 recognizer = gr.Radio(['pocketSphinx','phonetic'], value='pocketSphinx', label='Rhubarb recognizer', info='English / language-independent')
                 dialog = gr.Textbox(label='Optional spoken transcript', lines=2, max_lines=4)
@@ -225,7 +236,7 @@ def build():
             demo_status = gr.Markdown()
             btn.click(demo_render,outputs=[demo_still,demo_move,demo_receipt,demo_status],concurrency_limit=1)
         gr.Markdown('**Limits:** Maximum 1280×720; 30-second audio; videos need integer constant frame rate and matched audio length. '
-                    'The draft generator does not find or remove a mouth, recognize anatomy, produce approved Tiger shapes, or provide AI face generation/free hosted inference. Existing mouth animation still needs neutral/masked source art. '
+                    'Source tracing conservatively segments pixels inside the chosen mouth box, but does not identify anatomy, remove prior mouth animation, generate approved Tiger shapes, or provide neural face generation/free hosting. Existing mouth animation still needs neutral/masked source art. '
                     'Scratch output is eligible for pruning after one hour on subsequent jobs and is removed at process exit; original uploads are never deleted.')
     return app
 
