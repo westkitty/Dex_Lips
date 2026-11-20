@@ -127,6 +127,36 @@ class SourceGeometryTests(unittest.TestCase):
                 self.assertTrue(job_output.stat().st_size > 1000)
                 self.assertIsInstance(receipt,dict)
 
+    def test_gradio_generated_zip_to_existing_render_callback(self):
+        """Real UI callback chain, not just direct internal renderer calls."""
+        if not shutil.which('ffmpeg') or not shutil.which('ffprobe'):
+            self.skipTest('ffmpeg missing')
+        from app import generate_mouth_assets, render_uploaded
+        source = self.source('ui-source.png')
+        audio = ROOT / 'experiments/browser-wasm/fixtures/spoken_2s.wav'
+        cues = (ROOT / 'experiments/browser-wasm/evidence/actual_rhubarb_mouthCues.json').read_text()
+        before = hashlib.sha256(source.read_bytes()).hexdigest()
+        preview, diagnostic, archive, imported, status = generate_mouth_assets(
+            str(source), .5, .61, .29, .20, 'source-faceted', 0, 'dark')
+        self.assertTrue(Path(preview).is_file())
+        self.assertTrue(Path(diagnostic).is_file())
+        self.assertEqual(archive, imported)
+        self.assertIn('silhouette traced', status)
+        mp4, download, receipt_path, status = render_uploaded(
+            str(source), str(audio), archive, cues,
+            '', .5, .61, 1, 0, 24, True, False)
+        self.assertIn('Rendered and verified', status)
+        self.assertEqual(mp4, download)
+        self.assertTrue(Path(mp4).is_file())
+        receipt = json.loads(Path(receipt_path).read_text())
+        self.assertEqual(receipt['provider'], 'LOCAL_PROCESSING_ONLY_NO_CLOUD_UPLOAD')
+        probe = media_probe(Path(mp4))
+        self.assertEqual(probe['video']['codec_name'], 'h264')
+        self.assertEqual(probe['audio']['codec_name'], 'aac')
+        subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-xerror', '-i', mp4,
+                        '-f', 'null', '-'], check=True, timeout=30)
+        self.assertEqual(before, hashlib.sha256(source.read_bytes()).hexdigest())
+
     def test_exact_bundled_canonical_source_is_not_auto_approved(self):
         from unittest.mock import patch
         source = self.source()
