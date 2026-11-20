@@ -22,3 +22,8 @@
 - Added safe user-authored, user-authorized noncanonical mouth rig ZIP route while locking the original Tiger source hashes against unauthorized mouth rigs. No approved Tiger mouth sprites or tracking data exist.
 - Single-pass MP4 encode, cue index and bounded sprite cache improved measured isolated container medians for the 6-second benchmark; consult `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md` rather than repeating percentage claims without test context.
 - Preserve explicit partial/unverified states for actual Rhubarb phoneme analysis, free cloud deployment, video mouth removal, tablet runtime and canonical Tiger rig approval.
+
+## 2026-11-20 — Requirement correction: self-generating mouth assets
+
+- User specified that the product must make its own mouth shapes, rather than requiring external hand-drawn art. The new generator creates source-conditioned, editable draft sprite layers through a no-fee deterministic route and integrates them into the current Gradio UI. Explicit visual review is required, and canonical reference art stays locked against auto-generated approval.
+- Separate mouth rig import remains supported. Automated detector/model-based anatomy, tracking, video mouth cleanup, and target-device visual quality remain unverified. The feature branch requires runtime tests and review before it can supersede the current verified baseline.
