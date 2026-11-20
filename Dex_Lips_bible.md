@@ -27,3 +27,8 @@
 
 - User specified that the product must make its own mouth shapes, rather than requiring external hand-drawn art. The new generator creates source-conditioned, editable draft sprite layers through a no-fee deterministic route and integrates them into the current Gradio UI. Explicit visual review is required, and canonical reference art stays locked against auto-generated approval.
 - Separate mouth rig import remains supported. Automated detector/model-based anatomy, tracking, video mouth cleanup, and target-device visual quality remain unverified. The feature branch requires runtime tests and review before it can supersede the current verified baseline.
+
+## 2026-11-20 — Source-specific mouth geometry rather than generic ovals
+
+- Draft generator gained conservative source-contour modes that trace a connected dark/light mouth shape inside a user-designated region and warp the actual asymmetrical silhouette and source colors. Explicit graphic presets remain for artwork without an isolatable mouth. Fail-closed contour extraction prevents silently inventing anatomy; diagnostic trace and open pose are review surfaces, not identity-certification tools.
+- Current constraints: mouth placement/ROI still needs user input, outputs are visually proposed poses (not a jaw-rig or occlusion solution), Tiger canonical approved art still cannot be auto-created, and existing audio/media rendering route is preserved. PR #1 must stay unmerged until full-suite CI and generated-rig MP4 readback pass.
