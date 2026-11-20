@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "duration": 2.215,
+    "analysis": "wav2vec2-phoneme",
+    "model": "facebook/wav2vec2-lv-60-espeak-cv-ft",
+    "revision": "ae45363bf3413b374fecd9dc8bc1df0e24c3b7f4",
+    "license": "apache-2.0",
+    "phonemes": "h u\u02d0 t \u028c t\u0283 \u1d7b z m i \u00e6 m a\u026a \u026a n b \u025b d",
+    "cue_count": 16
+  },
+  "mouthCues": [
+    {
+      "start": 0.0,
+      "end": 0.25,
+      "value": "X"
+    },
+    {
+      "start": 0.25,
+      "end": 0.33,
+      "value": "B"
+    },
+    {
+      "start": 0.33,
+      "end": 0.4,
+      "value": "F"
+    },
+    {
+      "start": 0.4,
+      "end": 0.48,
+      "value": "B"
+    },
+    {
+      "start": 0.48,
+      "end": 0.57,
+      "value": "C"
+    },
+    {
+      "start": 0.57,
+      "end": 0.84,
+      "value": "B"
+    },
+    {
+      "start": 0.84,
+      "end": 0.92,
+      "value": "A"
+    },
+    {
+      "start": 0.92,
+      "end": 1.17,
+      "value": "B"
+    },
+    {
+      "start": 1.17,
+      "end": 1.44,
+      "value": "C"
+    },
+    {
+      "start": 1.44,
+      "end": 1.49,
+      "value": "A"
+    },
+    {
+      "start": 1.49,
+      "end": 1.57,
+      "value": "D"
+    },
+    {
+      "start": 1.57,
+      "end": 1.73,
+      "value": "B"
+    },
+    {
+      "start": 1.73,
+      "end": 1.8,
+      "value": "A"
+    },
+    {
+      "start": 1.8,
+      "end": 1.91,
+      "value": "C"
+    },
+    {
+      "start": 1.91,
+      "end": 2.07,
+      "value": "B"
+    },
+    {
+      "start": 2.07,
+      "end": 2.21,
+      "value": "X"
+    }
+  ]
+}

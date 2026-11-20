@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "duration": 3.98,
+    "analysis": "rhubarb",
+    "recognizer": "pocketSphinx",
+    "cue_count": 21
+  },
+  "mouthCues": [
+    {
+      "start": 0.0,
+      "end": 0.18,
+      "value": "X"
+    },
+    {
+      "start": 0.18,
+      "end": 0.73,
+      "value": "F"
+    },
+    {
+      "start": 0.73,
+      "end": 0.8,
+      "value": "G"
+    },
+    {
+      "start": 0.8,
+      "end": 0.87,
+      "value": "B"
+    },
+    {
+      "start": 0.87,
+      "end": 0.94,
+      "value": "F"
+    },
+    {
+      "start": 0.94,
+      "end": 1.08,
+      "value": "B"
+    },
+    {
+      "start": 1.08,
+      "end": 1.15,
+      "value": "C"
+    },
+    {
+      "start": 1.15,
+      "end": 1.29,
+      "value": "H"
+    },
+    {
+      "start": 1.29,
+      "end": 1.36,
+      "value": "G"
+    },
+    {
+      "start": 1.36,
+      "end": 1.6,
+      "value": "X"
+    },
+    {
+      "start": 1.6,
+      "end": 1.81,
+      "value": "F"
+    },
+    {
+      "start": 1.81,
+      "end": 1.89,
+      "value": "A"
+    },
+    {
+      "start": 1.89,
+      "end": 2.11,
+      "value": "C"
+    },
+    {
+      "start": 2.11,
+      "end": 2.18,
+      "value": "B"
+    },
+    {
+      "start": 2.18,
+      "end": 2.32,
+      "value": "C"
+    },
+    {
+      "start": 2.32,
+      "end": 2.56,
+      "value": "B"
+    },
+    {
+      "start": 2.56,
+      "end": 2.66,
+      "value": "E"
+    },
+    {
+      "start": 2.66,
+      "end": 2.73,
+      "value": "B"
+    },
+    {
+      "start": 2.73,
+      "end": 2.94,
+      "value": "C"
+    },
+    {
+      "start": 2.94,
+      "end": 3.43,
+      "value": "B"
+    },
+    {
+      "start": 3.43,
+      "end": 3.98,
+      "value": "X"
+    }
+  ]
+}

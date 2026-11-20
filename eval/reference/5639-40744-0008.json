@@ -1,0 +1,135 @@
+{
+ "clip": "5639-40744-0008",
+ "transcript": "WHO TOUCHES ME AM I IN BED",
+ "status": "REVIEWER_JUDGMENT_NOT_GROUND_TRUTH",
+ "method": "Draft from eval/tools/draft_reference.py (wav2vec2-base-960h character forced alignment of the LibriSpeech transcript for word boundaries, espeak-ng en-us pronunciations, weighted phoneme durations, documented phoneme->shape table), then visual review of a spectrogram with the cue overlay.",
+ "review": {
+  "reviewer": "Grok Bot (automated assistant), 2026-11-20",
+  "checked": "word onsets/offsets and pauses against the spectrogram for the whole clip",
+  "edits": "No timing edits: word boundaries and pauses matched visible onsets/offsets within about 1-2 frames (20-40 ms) at the review resolution."
+ },
+ "word_spans": [
+  [
+   "who",
+   0.29,
+   0.39
+  ],
+  [
+   "touches",
+   0.44,
+   0.88
+  ],
+  [
+   "me",
+   0.88,
+   1.02
+  ],
+  [
+   "am",
+   1.37,
+   1.54
+  ],
+  [
+   "i",
+   1.54,
+   1.66
+  ],
+  [
+   "in",
+   1.66,
+   1.74
+  ],
+  [
+   "bed",
+   1.76,
+   2.04
+  ]
+ ],
+ "mouthCues": [
+  {
+   "start": 0.0,
+   "end": 0.29,
+   "value": "X"
+  },
+  {
+   "start": 0.29,
+   "end": 0.33,
+   "value": "B"
+  },
+  {
+   "start": 0.33,
+   "end": 0.44,
+   "value": "F"
+  },
+  {
+   "start": 0.44,
+   "end": 0.5,
+   "value": "B"
+  },
+  {
+   "start": 0.5,
+   "end": 0.62,
+   "value": "C"
+  },
+  {
+   "start": 0.62,
+   "end": 0.88,
+   "value": "B"
+  },
+  {
+   "start": 0.88,
+   "end": 0.93,
+   "value": "A"
+  },
+  {
+   "start": 0.93,
+   "end": 1.02,
+   "value": "B"
+  },
+  {
+   "start": 1.02,
+   "end": 1.37,
+   "value": "X"
+  },
+  {
+   "start": 1.37,
+   "end": 1.47,
+   "value": "C"
+  },
+  {
+   "start": 1.47,
+   "end": 1.54,
+   "value": "A"
+  },
+  {
+   "start": 1.54,
+   "end": 1.66,
+   "value": "D"
+  },
+  {
+   "start": 1.66,
+   "end": 1.76,
+   "value": "B"
+  },
+  {
+   "start": 1.76,
+   "end": 1.83,
+   "value": "A"
+  },
+  {
+   "start": 1.83,
+   "end": 1.97,
+   "value": "C"
+  },
+  {
+   "start": 1.97,
+   "end": 2.04,
+   "value": "B"
+  },
+  {
+   "start": 2.04,
+   "end": 2.21,
+   "value": "X"
+  }
+ ]
+}
