@@ -81,7 +81,17 @@ PYTHONPATH=src python3 scripts/proof_smoke.py
 - See `OPERATIONAL_STATE.md`, `Dex_Lips_bible.md`, `docs/ACCEPTANCE_TESTS.md`, `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md`, and `docs/SOURCE_REFERENCES.md`.
 - Codex handoff: `prompts/CODEX_BUILD_PROMPT.md` is for finishing the remaining capabilities, not rebuilding the verified compositor.
 
-**Cost:** $0 for code/runtime in the disposable test environment, with no paid calls. Free production cloud hosting is **not** promised. Hugging Face now requires paid-plan access for ordinary new Gradio/Docker compute Spaces; free ZeroGPU creation is conditional. GitHub is private and code contains no user-uploaded working media.
+**Cost:** $0 for code/runtime in the disposable test environment, with no paid calls. Free production cloud hosting is **not** promised. Hugging Face now requires paid-plan access for ordinary new Gradio/Docker compute Spaces; free ZeroGPU creation is conditional. GitHub repository visibility is PUBLIC (verified 2026-11-20). The Pages artifact contains only the purpose-built browser studio; bundled canonical image references and private working media are excluded from the public Pages artifact.
+
+## Browser mouth rig studio — GitHub Pages
+
+**Site:** https://westkitty.github.io/Dex_Lips/
+
+The static `site/` application supports browser-local still/image/video-frame import; manually positioned source-pixel mouth contour tracing (soft/faceted/dark/light); nine separately exportable transparent PNG sprites (X, A–H); cue JSON visual preview with local audio; source SHA-256 and bundled-reference hash refusal; preview, per-job draft review, and a ZIP containing PNGs and an unapproved, source-bound `rig.json`. The original image stays local and unchanged.
+
+**Not hosted on Pages:** the Python/Gradio renderer, Rhubarb subprocess speech recognition, mouth removal/tracking, canonical image approval or H.264/AAC MP4 export. Use the separate verified Python/FFmpeg studio to produce MP4 from the reviewed rig. No character art, audio, or video is uploaded to the Pages backend (there is no backend).
+
+GitHub Actions publishes only `site/`. The test workflow runs Chromium image-to-PNG/ZIP exercises, source hash checks, fail-closed tracing tests, and a mobile width check. Production deployment [run 44731970189](https://github.com/westkitty/Dex_Lips/actions/runs/44731970189) reported **SUCCESS** on commit `c43c2c541d021b8ebcefee6575bc57438fad7ca0` and emitted the URL above. External HTTP readback from this assistant's network was unavailable at the time of the run; do not mistake the deployment receipt for cross-browser/live-device QA.
 
 ## Experimental browser WASM challenger
 
