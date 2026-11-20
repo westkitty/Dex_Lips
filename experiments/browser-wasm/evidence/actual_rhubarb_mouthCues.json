@@ -1,0 +1,55 @@
+{
+  "mouthCues": [
+    {
+      "start": 0,
+      "end": 0.02,
+      "value": "A"
+    },
+    {
+      "start": 0.02,
+      "end": 0.39,
+      "value": "B"
+    },
+    {
+      "start": 0.39,
+      "end": 0.6,
+      "value": "C"
+    },
+    {
+      "start": 0.6,
+      "end": 0.97,
+      "value": "A"
+    },
+    {
+      "start": 0.97,
+      "end": 1.03,
+      "value": "F"
+    },
+    {
+      "start": 1.03,
+      "end": 1.09,
+      "value": "B"
+    },
+    {
+      "start": 1.09,
+      "end": 1.16,
+      "value": "D"
+    },
+    {
+      "start": 1.16,
+      "end": 1.37,
+      "value": "C"
+    },
+    {
+      "start": 1.37,
+      "end": 1.96,
+      "value": "B"
+    },
+    {
+      "start": 1.96,
+      "end": 2,
+      "value": "A"
+    }
+  ],
+  "provenance": "MacBook Chrome 157 + lip-sync-engine@1.0.3 real WASM input spoken_2s.wav; exact successful CDP result"
+}

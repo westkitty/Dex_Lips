@@ -1,0 +1,26 @@
+<!doctype html><html><meta charset="utf-8"><title>WASM_PROBE_WAITING</title><pre id="result">starting</pre><script type="module">
+import { LipSyncEngine } from './wasm_dep/dist/index.mjs';
+import { canEncodeVideo, canEncodeAudio, Quality } from './mediabunny_dep/dist/bundles/mediabunny.mjs';
+const start=performance.now();
+try {
+ const raw=await(await fetch('./spoken_2s.wav')).arrayBuffer();
+ const view=new DataView(raw); let at=12,chunk=-1,size=0; while(at+8<=view.byteLength){const name=String.fromCharCode(...new Uint8Array(raw,at,4));const n=view.getUint32(at+4,true);if(name==='data'){chunk=at+8;size=n;break;}at+=8+n+(n%2)}
+ if(chunk<0||chunk+size>raw.byteLength)throw Error('Expected RIFF WAV data chunk');
+ const pcm=new Int16Array(size/2);for(let i=0;i<pcm.length;i++)pcm[i]=view.getInt16(chunk+i*2,true);
+ const duration=pcm.length/16000;document.getElementById('result').textContent='PCM_READY';
+ document.getElementById('result').textContent='WASM_INITIALIZING'; const e=LipSyncEngine.getInstance();
+ await e.init({wasmPath:'/wasm_dep/dist/wasm/lip-sync-engine.wasm',dataPath:'/wasm_dep/dist/wasm/lip-sync-engine.data',jsPath:'/wasm_dep/dist/wasm/lip-sync-engine.js'});
+ const initMs=performance.now()-start;
+ const a=performance.now();
+ document.getElementById('result').textContent='WASM_ANALYZING'; const cues=await e.analyze(pcm,{dialogText:'Hello there. We are testing the speaking mouth.',sampleRate:16000});
+ const analysisMs=performance.now()-a;
+ const h264=typeof VideoEncoder!=='undefined'?await VideoEncoder.isConfigSupported({codec:'avc1.42E01E',width:320,height:240,bitrate:600000,framerate:24}):null;
+ const aac=typeof AudioEncoder!=='undefined'?await AudioEncoder.isConfigSupported({codec:'mp4a.40.2',sampleRate:16000,numberOfChannels:1,bitrate:96000}):null;
+ const mbH264=await canEncodeVideo('avc',{width:320,height:240,bitrate:600000,framerate:24}).catch(err=>({error:String(err)}));
+ const mbAac=await canEncodeAudio('aac',{sampleRate:16000,numberOfChannels:1,bitrate:96000}).catch(err=>({error:String(err)}));
+ const result={status:'PASS_REAL_WASM',duration:duration,initMs:Math.round(initMs),analysisMs:Math.round(analysisMs),cueCount:cues.mouthCues?.length,shapes:[...new Set(cues.mouthCues?.map(x=>x.value)||[])],cues:cues.mouthCues,capabilities:{secureContext:isSecureContext,VideoEncoder:typeof VideoEncoder,h264:h264?.supported,AudioEncoder:typeof AudioEncoder,aac:aac?.supported,mediabunnyH264:mbH264,mediabunnyAAC:mbAac},jsHeap:performance.memory?.usedJSHeapSize||null};
+ document.getElementById('result').textContent=JSON.stringify(result);
+ document.title='WASM_PROBE_FINISHED';
+
+} catch(err){document.getElementById('result').textContent=JSON.stringify({status:'BLOCKED',error:String(err),stack:err?.stack?.slice(0,500)});document.title='WASM_PROBE_FAILED';}
+</script></html>

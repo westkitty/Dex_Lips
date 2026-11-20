@@ -1,0 +1,11 @@
+{
+  "status": "MOBILE_TEST_BLOCKED",
+  "device": "SM-X910",
+  "mode": "still",
+  "mediaLocalOnly": true,
+  "error": "Error: CDP_TIMEOUT Target.getTargets",
+  "requests": [],
+  "debugForwardRemoved": true,
+  "reverseRemoved": true,
+  "scope": "Background Chrome CDP tablet attempt blocked before media request; no actual Android rendering; not a model/codec failure."
+}

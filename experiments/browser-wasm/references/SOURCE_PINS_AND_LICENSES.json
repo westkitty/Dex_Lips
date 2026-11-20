@@ -1,0 +1,25 @@
+{
+  "champion": "https://github.com/westkitty/Dex_Lips/tree/d6caff6a25e0859a3f8a6bf4843d2666c169e31e",
+  "analogue_dougalder": {
+    "url": "https://github.com/dougalder/lip-sync-generator/tree/7c80cd05f4d839d4a047e6540d1ed5d9dccc7f66",
+    "license": "Apache-2.0"
+  },
+  "rhubarb_wasm": {
+    "url": "https://github.com/biolimbo/lip-sync-engine/tree/28bae2a02ff0416f097d9baaa520d510ce4e7228",
+    "npm": "lip-sync-engine@1.0.3",
+    "license": "MIT",
+    "npm_sha512_integrity": "mIf68zmA9g3VYDZ5vSB6e3QsB5SU4e+dcByeSDtTByFbhyRerVrMu9o9lvtjpNCzCD4utpbBX3arpbxhD8oXbA=="
+  },
+  "mediabunny": {
+    "url": "https://github.com/Vanilagy/mediabunny/tree/6bb7c03241aa35f6849b28200e59c17f9a346312",
+    "npm": "mediabunny@1.66.2",
+    "license": "MPL-2.0",
+    "npm_sha512_integrity": "NTzRrBhAyRVi8qpJ9AH6XPyxiDVkfugxYY+gu3Z5zi+Nw2R/7nTAnXJEt2Ucy8wTIve1/UYGnCFf50x2LpvMDQ=="
+  },
+  "aac_encoder": {
+    "url": "https://github.com/Vanilagy/mediabunny/blob/6bb7c03241aa35f6849b28200e59c17f9a346312/docs/guide/extensions/aac-encoder.md",
+    "npm": "@mediabunny/aac-encoder@1.66.2",
+    "license": "MPL-2.0 (third-party FFmpeg licensing also relevant)",
+    "npm_sha512_integrity": "4OLUxYFkUAF3Q1/1mhZ/uBUTU6dLw9y0Cw9Ln9+jGGtrIN6vDjrYm+DAu18hlp5EMOTPjwdbsxWKs2RKO86Y4g=="
+  }
+}

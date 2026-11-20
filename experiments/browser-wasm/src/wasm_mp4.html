@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MP4_PROBE_WAITING</title><script type="importmap">{"imports":{"mediabunny":"/mediabunny_dep/dist/bundles/mediabunny.mjs"}}</script></head><body><pre id="result">starting</pre><script type="module">
+import { LipSyncEngine } from './wasm_dep/dist/index.mjs';
+import { Input, ALL_FORMATS, BlobSource, VideoSampleSink, Output, Mp4OutputFormat, BufferTarget, CanvasSource, AudioBufferSource, Quality, canEncodeAudio, canEncodeVideo } from './mediabunny_dep/dist/bundles/mediabunny.mjs';
+import { registerAacEncoder } from './mediabunny_aac_dep/dist/bundles/mediabunny-aac-encoder.mjs';
+const state=document.getElementById('result'), mode=new URLSearchParams(location.search).get('mode')||'still';let stage='bootstrap';
+const setStage=s=>{stage=s;state.textContent=s;};
+const sha=async bytes=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(x=>x.toString(16).padStart(2,'0')).join('');
+const shapeAt=(cues,t)=>{let lo=0,hi=cues.length;while(lo<hi){const m=(lo+hi)>>1;if(cues[m].end<=t)lo=m+1;else hi=m;}return lo<cues.length&&cues[lo].start<=t?cues[lo].value:'X';};
+async function main(){const begin=performance.now();let videoSink=null;try{
+ setStage('reading audio');const raw=await(await fetch('./spoken_2s.wav')).arrayBuffer();const view=new DataView(raw);let at=12,start=-1,size=0;while(at+8<=view.byteLength){const name=String.fromCharCode(...new Uint8Array(raw,at,4)),n=view.getUint32(at+4,true);if(name==='data'){start=at+8;size=n;break;}at+=8+n+n%2;}
+ if(start<0||start+size>raw.byteLength)throw Error('Invalid PCM WAV');const pcm=new Int16Array(size/2);for(let i=0;i<pcm.length;i++)pcm[i]=view.getInt16(start+i*2,true);
+ setStage('analyzing audio');const e=LipSyncEngine.getInstance();await e.init({wasmPath:'/wasm_dep/dist/wasm/lip-sync-engine.wasm',dataPath:'/wasm_dep/dist/wasm/lip-sync-engine.data',jsPath:'/wasm_dep/dist/wasm/lip-sync-engine.js'});
+ const tA=performance.now();const doc=await e.analyze(pcm,{dialogText:'Hello there. We are testing the speaking mouth.',sampleRate:16000});const analysisMs=performance.now()-tA;const cues=doc.mouthCues;if(!cues?.length||!cues.some(c=>c.value!=='X'))throw Error('No genuine speech mouth movement detected');
+ setStage('checking codecs');const nativeAac=await canEncodeAudio('aac',{sampleRate:16000,numberOfChannels:1,bitrate:64000});if(!nativeAac)registerAacEncoder();
+ const aacReady=await canEncodeAudio('aac',{sampleRate:16000,numberOfChannels:1,bitrate:64000});const avcReady=await canEncodeVideo('avc',{width:320,height:240,bitrate:500000,framerate:24});if(!aacReady||!avcReady)throw Error(`Codecs unavailable avc=${avcReady} aac=${aacReady}`);
+ const imageBytes=await(await fetch('./synthetic_character.png')).arrayBuffer();const imageHashBefore=await sha(imageBytes);const image=new Image();const blob=URL.createObjectURL(new Blob([imageBytes],{type:'image/png'}));image.src=blob;await image.decode();URL.revokeObjectURL(blob);
+ const canvas=document.createElement('canvas');canvas.width=320;canvas.height=240;const ctx=canvas.getContext('2d',{alpha:false});let srcHashBefore=imageHashBefore,videoBytes=null;
+ if(mode==='moving'){setStage('decoding source video');videoBytes=await(await fetch('./synthetic_moving_video.mp4')).arrayBuffer();srcHashBefore=await sha(videoBytes);const input=new Input({formats:ALL_FORMATS,source:new BlobSource(new Blob([videoBytes],{type:'video/mp4'}))});const track=await input.getPrimaryVideoTrack();if(!track||!await track.canDecode())throw Error('Unable to decode moving source');videoSink=new VideoSampleSink(track);}
+ setStage('encoding tracks');const target=new BufferTarget();const output=new Output({format:new Mp4OutputFormat(),target});const vSource=new CanvasSource(canvas,{codec:'avc',quality:new Quality({bitrate:500000})});const aSource=new AudioBufferSource({codec:'aac',quality:new Quality({bitrate:64000})});output.addVideoTrack(vSource,{frameRate:24});output.addAudioTrack(aSource);await output.start();
+ const audio=new AudioBuffer({numberOfChannels:1,length:pcm.length,sampleRate:16000});const dest=audio.getChannelData(0);for(let i=0;i<pcm.length;i++)dest[i]=pcm[i]/32768;
+ await aSource.add(audio);aSource.close();const tR=performance.now();let sampled=0;const marks=[];
+ for(let i=0;i<48;i++){const t=i/24;if(mode==='still'){ctx.drawImage(image,0,0,320,240)}else{const sample=await videoSink.getSample(t);if(!sample)throw Error('Missing video sample at '+t.toFixed(4));sample.draw(ctx,0,0,320,240);sample.close();sampled++;}
+ const s=shapeAt(cues,t);const r=s==='X'?2:s==='A'?3:s==='B'?7:s==='C'?11:s==='D'?15:s==='E'?8:s==='F'?8:s==='G'?10:12;
+ const x=mode==='moving'?128+64*(t/2):160;ctx.beginPath();ctx.ellipse(x,146,20,r,0,0,Math.PI*2);ctx.fillStyle='#0c1c24';ctx.fill();ctx.strokeStyle='#41f0e1';ctx.lineWidth=2;ctx.stroke();if([0,12,24,36,47].includes(i))marks.push([i,s]);await vSource.add(t,1/24);}
+ vSource.close();await output.finalize();const renderMs=performance.now()-tR;const bytes=target.buffer;if(!bytes||bytes.byteLength<200)throw Error('Empty encoded MP4');
+ const mp4Hash=await sha(bytes);const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([bytes],{type:'video/mp4'}));link.download='wasm_'+mode+'.mp4';link.click();
+ const result={status:'PASS_RENDERED',mode,sourceHashBefore:srcHashBefore,sourceHashAfter:await sha(mode==='still'?imageBytes:videoBytes),audioSha256:await sha(raw),mp4Sha256:mp4Hash,mp4Bytes:bytes.byteLength,analysisMs:Math.round(analysisMs),renderMs:Math.round(renderMs),totalMs:Math.round(performance.now()-begin),cues:cues.length,shapeTypes:[...new Set(cues.map(x=>x.value))],marks,nativeAac,polyfill:!nativeAac,codecs:{avc:avcReady,aac:aacReady},frames:48,sourceVideoFrames:sampled,wasmHeapBytes:e.module?.HEAP8?.buffer?.byteLength||null,jsHeapBytes:performance.memory?.usedJSHeapSize||null};state.textContent=JSON.stringify(result);document.title='MP4_PROBE_FINISHED';
+ }catch(err){state.textContent=JSON.stringify({status:'FAILED',mode,stage,error:String(err),stack:err?.stack?.slice(0,400)});document.title='MP4_PROBE_FAILED';}}
+main();
+</script></body></html>

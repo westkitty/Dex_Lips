@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4122,
+      "sha256": "5c58306bbaf7ba5268086c2362d1aa44513dd7d66f719ea14faabd62c271472e"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 7093,
+      "sha256": "f67a59fa7461302d6106299fd953aff01ca7faa02e596c7860e4efcb0a51774f"
+    },
+    {
+      "path": "evidence/actual_rhubarb_mouthCues.json",
+      "bytes": 857,
+      "sha256": "1444e92cd65b45315f3c845e022f4f42e2f5fbe1177d467b1a61f55e509c3e9d"
+    },
+    {
+      "path": "evidence/android_full_render_blocked.json",
+      "bytes": 369,
+      "sha256": "09961b0540eca382b26e48fa94925754b591dae552e9673b1c2de31630e3789e"
+    },
+    {
+      "path": "evidence/readback_receipts.json",
+      "bytes": 3026,
+      "sha256": "d7c3cf4b8258184a1f7c364a3407e2526070cfbda7223d86d3b029f440097f9d"
+    },
+    {
+      "path": "fixtures/spoken_2s.wav",
+      "bytes": 64078,
+      "sha256": "b14528b43805e02e327ef0c69577c7ddfa27508b843e5b18a0b5abff447b1f14"
+    },
+    {
+      "path": "fixtures/synthetic_character.png",
+      "bytes": 1545,
+      "sha256": "4d806e96d83731bc21f91c26c1a6d641bb28ecf71f1e5aa99d92e16a467c41b1"
+    },
+    {
+      "path": "fixtures/synthetic_moving_video.mp4",
+      "bytes": 7550,
+      "sha256": "005ed0209e72d62159191c1f0874e1755ea98c2794d6bd7161255c2775025731"
+    },
+    {
+      "path": "references/SOURCE_PINS_AND_LICENSES.json",
+      "bytes": 1271,
+      "sha256": "ee7415e6939f348c515ae5c7aa9984a789870df22c9b069a06b769c3d396769a"
+    },
+    {
+      "path": "src/android_full_gate.cjs",
+      "bytes": 5482,
+      "sha256": "2b3149b4341322ac8977b253086c274a724f29d4d3f9ce840614385e14945f08"
+    },
+    {
+      "path": "src/run_browser_cdp.cjs",
+      "bytes": 4525,
+      "sha256": "b871e19d7dc5a34887ec0d00aee175880d570b47cbbf27ff8b21881a51d59574"
+    },
+    {
+      "path": "src/run_browser_mp4.cjs",
+      "bytes": 4757,
+      "sha256": "dad9b9fd679c845599907921fb4d3ba8dc04dd3c42d65d4654293ebc992bcabc"
+    },
+    {
+      "path": "src/wasm_mp4.html",
+      "bytes": 6136,
+      "sha256": "cd41ca38d7117902731f0c727ec8c90d3595aff90da076211e9ae7e47457b047"
+    },
+    {
+      "path": "src/wasm_probe_v2.html",
+      "bytes": 2822,
+      "sha256": "fd161930e79955563a03181b6233d541265997df0fa9656f84373981e90a3440"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "analysis": {
+    "status": "PASS_REAL_WASM",
+    "input_audio_sha256": "b14528b43805e02e327ef0c69577c7ddfa27508b843e5b18a0b5abff447b1f14",
+    "cues": [
+      {
+        "start": 0,
+        "end": 0.02,
+        "value": "A"
+      },
+      {
+        "start": 0.02,
+        "end": 0.39,
+        "value": "B"
+      },
+      {
+        "start": 0.39,
+        "end": 0.6,
+        "value": "C"
+      },
+      {
+        "start": 0.6,
+        "end": 0.97,
+        "value": "A"
+      },
+      {
+        "start": 0.97,
+        "end": 1.03,
+        "value": "F"
+      },
+      {
+        "start": 1.03,
+        "end": 1.09,
+        "value": "B"
+      },
+      {
+        "start": 1.09,
+        "end": 1.16,
+        "value": "D"
+      },
+      {
+        "start": 1.16,
+        "end": 1.37,
+        "value": "C"
+      },
+      {
+        "start": 1.37,
+        "end": 1.96,
+        "value": "B"
+      },
+      {
+        "start": 1.96,
+        "end": 2,
+        "value": "A"
+      }
+    ],
+    "init_ms": 239,
+    "speech_analysis_ms": 974,
+    "browser": "MacBook Chrome 157 CDP",
+    "js_heap_after_bytes": 80433799
+  },
+  "still": {
+    "status": "PASS_RENDERED",
+    "input_sha256": "4d806e96d83731bc21f91c26c1a6d641bb28ecf71f1e5aa99d92e16a467c41b1",
+    "mp4_sha256": "7cee6d8ef138fa62de8f0213787102001d532bd5be995e7054ff0c8c3348c2af",
+    "mp4_bytes": 24678,
+    "speech_analysis_ms": 962,
+    "encode_ms": 77,
+    "frames": 48,
+    "codec_video": "h264",
+    "codec_audio": "aac",
+    "duration_s": 2.048,
+    "full_ffmpeg_decode": "PASS on initial and repeat",
+    "audio_correlation": 0.9998,
+    "audio_lag_s": 0.0,
+    "post_run_js_heap_bytes": 85794161,
+    "output_location": "MacBook scratch; not included in this ZIP"
+  },
+  "moving": {
+    "status": "PASS_RENDERED",
+    "input_sha256": "005ed0209e72d62159191c1f0874e1755ea98c2794d6bd7161255c2775025731",
+    "mp4_sha256": "be38f8dbf0e2450c41993a4dc19c7335e57c05a4d8b1d811e31ede9e4baf5451",
+    "mp4_bytes": 65027,
+    "speech_analysis_ms": 951,
+    "encode_ms": 201,
+    "frames": 48,
+    "source_video_frames": 48,
+    "codec_video": "h264",
+    "codec_audio": "aac",
+    "duration_s": 2.048,
+    "full_ffmpeg_decode": "PASS on initial and repeat",
+    "audio_correlation": 0.9998,
+    "audio_lag_s": 0.0,
+    "post_run_js_heap_bytes": 86940536,
+    "output_location": "MacBook scratch; not included in this ZIP"
+  },
+  "android_capability": {
+    "status": "PASS_CODEC_CAPABILITY_ONLY",
+    "device": "Samsung Galaxy Tab S9 Ultra SM-X910",
+    "browser": "Chrome 157.0.8103.78",
+    "secure_context": true,
+    "H264_WebCodecs": true,
+    "AAC_native_WebCodecs": false,
+    "AAC_polyfill_runtime_on_device": "NOT_TESTED",
+    "whole_video_render_on_device": "NOT_TESTED",
+    "ram_navigator_deviceMemoryGiB": 8,
+    "adb_tunnel_removed": true
+  },
+  "original_champion": {
+    "repository": "westkitty/Dex_Lips",
+    "branch": "main",
+    "git_sha": "d6caff6a25e0859a3f8a6bf4843d2666c169e31e",
+    "source_renderer_untouched": true,
+    "tiger_art_untouched": true
+  }
+}

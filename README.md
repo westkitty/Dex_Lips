@@ -76,3 +76,7 @@ PYTHONPATH=src python3 scripts/proof_smoke.py
 - Codex handoff: `prompts/CODEX_BUILD_PROMPT.md` is for finishing the remaining capabilities, not rebuilding the verified compositor.
 
 **Cost:** $0 for code/runtime in the disposable test environment, with no paid calls. Free production cloud hosting is **not** promised. Hugging Face now requires paid-plan access for ordinary new Gradio/Docker compute Spaces; free ZeroGPU creation is conditional. GitHub is private and code contains no user-uploaded working media.
+
+## Experimental browser WASM challenger
+
+A separate, non-production research implementation is in [`experiments/browser-wasm/`](experiments/browser-wasm/README.md): genuine Rhubarb WASM speech cues and H.264/AAC MP4 on synthetic still and moving sources, with pinned npm packages and external licensing documented. The full Android test, real footage masking, robust memory behavior, and same-machine performance comparison are not yet proven. The verified Python/FFmpeg renderer remains the default; this experiment is not an automatic fallback or a public application.
