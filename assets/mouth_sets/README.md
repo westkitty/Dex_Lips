@@ -22,19 +22,40 @@ See `contact_sheet.png`. X is a closed resting mouth line because the template i
 
 In the app, the **muzzle-template** construction mode draws the same shapes sized to your selected box and tints the outline from the surrounding paint.
 
-## Dexter muzzle set — NOT built yet (waiting on art access)
+## `dexter_muzzle/` — shipped (built only from the approved sheet)
 
-The owner supplied and approved a Dexter reference sheet on 2026-11-20 ("DEXTER 'Furious Little Stinkweasel' – Character Reference Sheet").
-The automated build environment could not read that file (it is held as a private attachment), so it is **not** in this repo and **no Dexter mouths were drawn**. Dexter's likeness was not invented or approximated.
+Source: `assets/reference/dexter/dexter_reference_sheet.png` ("DEXTER 'Furious Little Stinkweasel' – Character Reference Sheet"),
+supplied and approved by the owner on 2026-11-20, sha256 `ed81548c07c3e3b47a189a0aa2a502fe171146a1f2a96060d790e22091c12c41`.
+Rebuild with `python scripts/build_dexter_mouths.py` (needs Pillow, numpy, opencv-python; refuses to run if the sheet hash differs).
+Nothing was drawn freehand: every pixel is cut from the sheet, then edited as listed. See `contact_sheet.png`.
 
-To build the Dexter set, the sheet needs to be placed at `assets/reference/dexter/dexter_reference_sheet.png` (the owner has approved this), after which the nine states are cut and edited only from these cells:
+Cells used (row/column counted on the sheet; header text as printed on the sheet, typos included):
 
-| Needed from the sheet | Used for |
-|---|---|
-| Front-facing neutral head (closed mouth) | X (rest), A (pressed), base for B/G/H |
-| Front-facing joyful/open mouth with tongue | C, D, H (open shapes, tongue) |
-| Determined pose showing teeth | B (teeth together), G (teeth on lip) |
-| Profile with open mouth (if present) | jaw-drop distance and tongue reference for C/D |
-| Palette strip | exact line, fur, gum, tongue and teeth colours |
+| Cell | Header on sheet | What it shows | Used for |
+|---|---|---|---|
+| row 1, col 3 | "Left-Proflle" | front-facing head, relaxed closed mouth | base still (`assets/reference/dexter/dexter_front_still.png`), the fur around every sprite, X |
+| row 1, col 1 | "Front-01" | front-facing head, pressed downturned mouth | A |
+| row 1, col 4 | "Profile" | front-facing head, open mouth with teeth and tongue | C, D, E, F, H |
+| row 2, col 4 | "Determinted" | front-facing head, teeth showing | B, G |
 
-If the sheet lacks a usable rounded/puckered mouth for E and F, those two would have to be drawn by the owner (or approved as edits of the open-mouth cell); they will not be invented.
+Not used: back, three-quarter, lying-down and side views; the tongue-out tilted head (row 2 col 3); the palette strip (colours come straight from the cells).
+
+| Shape | Source cell | Edit |
+|---|---|---|
+| X | row 1 col 3 | none (base mouth) |
+| A | row 1 col 1 | none |
+| B | row 2 col 4 | none |
+| C | row 1 col 4 | none |
+| D | row 1 col 4 | mouth stretched 1.40x downward from the upper lip |
+| E | row 1 col 4 | 0.74x wide, 1.15x tall (rounder) |
+| F | row 1 col 4 | 0.52x wide, 0.85x tall (small puckered opening) |
+| G | row 2 col 4 | 0.88x wide, 0.70x tall (flatter, teeth on lip) |
+| H | row 1 col 4 | 0.92x wide, 1.20x tall (tongue visible) |
+
+How it is assembled: each sprite is a 148x88 px muzzle patch (4x LANCZOS upscale of a 37x22 px area under the nose). The base cell's own mouth line is removed by OpenCV inpainting, the source cell's mouth pixels are colour-matched to the base fur and composited in, and the patch fades out with a feathered ellipse. The four cells share one scale (their noses measure 18–19 px wide), so they are aligned on the nose with no resizing.
+
+Limits, stated plainly:
+- The sheet is small: each mouth is about 30x12 px, so the sprites are soft upscales.
+- The sheet has no rounded or puckered mouth, so E and F are scaled edits of the "Profile" open mouth, and G is a flattened "Determined" mouth. They are not separate drawings on the sheet; replace them if the owner draws dedicated ones.
+- The jaw does not move; only the mouth area changes, as in the sheet's own front-facing heads.
+- `rig.template.json` anchors the sprites for `dexter_front_still.png`; on other pictures you have to re-place and re-scale them.

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "character_id": "dexter",
+  "authority": "approved_user_rig",
+  "approved": true,
+  "approval": "Reference sheet supplied and approved by the owner on 2026-11-20; see docs/RIGHTS.md.",
+  "reference_sheet": "assets/reference/dexter/dexter_reference_sheet.png",
+  "reference_sheet_sha256": "ed81548c07c3e3b47a189a0aa2a502fe171146a1f2a96060d790e22091c12c41",
+  "intended_source": "assets/reference/dexter/dexter_front_still.png",
+  "mouth_anchor": {
+    "x": 0.503125,
+    "y": 0.758333,
+    "scale": 1.0,
+    "rotation_deg": 0
+  },
+  "anchor_note": "Sprites are muzzle patches cut from the sheet; on dexter_front_still.png the anchor puts their top edge just under the nose. On other pictures, scale so the patch width matches the muzzle.",
+  "shapes": {
+    "X": "X.png",
+    "A": "A.png",
+    "B": "B.png",
+    "C": "C.png",
+    "D": "D.png",
+    "E": "E.png",
+    "F": "F.png",
+    "G": "G.png",
+    "H": "H.png"
+  },
+  "descriptions": {
+    "X": "rest: base cell mouth unchanged",
+    "A": "closed, lips pressed (P B M): Front-01 mouth unchanged",
+    "B": "teeth nearly together (consonants, EE): Determined mouth unchanged",
+    "C": "open, tongue low (EH AE): Profile mouth unchanged",
+    "D": "wide open (AA): Profile mouth stretched 1.4x down",
+    "E": "rounded (AO ER): Profile mouth 0.74x wide, 1.15x tall",
+    "F": "puckered small opening (OO W): Profile mouth 0.52x wide, 0.85x tall",
+    "G": "teeth on lower lip (F V): Determined mouth 0.88x wide, 0.70x tall",
+    "H": "open, tongue showing (L): Profile mouth 0.92x wide, 1.20x tall"
+  },
+  "provenance": {
+    "X": {
+      "cell": "row 1 col 3 \"Left-Proflle\"",
+      "scale_x": 1.0,
+      "scale_y": 1.0
+    },
+    "A": {
+      "cell": "row 1 col 1 \"Front-01\"",
+      "scale_x": 1.0,
+      "scale_y": 1.0
+    },
+    "B": {
+      "cell": "row 2 col 4 \"Determinted\"",
+      "scale_x": 1.0,
+      "scale_y": 1.0
+    },
+    "C": {
+      "cell": "row 1 col 4 \"Profile\"",
+      "scale_x": 1.0,
+      "scale_y": 1.0
+    },
+    "D": {
+      "cell": "row 1 col 4 \"Profile\"",
+      "scale_x": 1.0,
+      "scale_y": 1.4
+    },
+    "E": {
+      "cell": "row 1 col 4 \"Profile\"",
+      "scale_x": 0.74,
+      "scale_y": 1.15
+    },
+    "F": {
+      "cell": "row 1 col 4 \"Profile\"",
+      "scale_x": 0.52,
+      "scale_y": 0.85
+    },
+    "G": {
+      "cell": "row 2 col 4 \"Determinted\"",
+      "scale_x": 0.88,
+      "scale_y": 0.7
+    },
+    "H": {
+      "cell": "row 1 col 4 \"Profile\"",
+      "scale_x": 0.92,
+      "scale_y": 1.2
+    }
+  },
+  "notes": "Built only from the owner-approved Dexter reference sheet by scripts/build_dexter_mouths.py. Base mouth line removed by inpainting; borrowed mouths colour-matched to the base fur. The sheet is low resolution (each mouth is about 30x12 px), so sprites are 4x upscales and look soft. E, F, G, D and H are edits (scaled) of sheet mouths, not separate drawings on the sheet."
+}
