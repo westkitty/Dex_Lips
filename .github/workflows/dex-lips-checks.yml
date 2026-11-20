@@ -30,12 +30,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install FFmpeg and synthetic test voice tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg espeak
       - name: Check system render prerequisites
         run: |
           command -v ffmpeg
           command -v ffprobe
-          ffmpeg -hide_banner -encoders | grep -q libx264
-          ffmpeg -hide_banner -encoders | grep -q aac
+          ffmpeg -hide_banner -encoders > "${RUNNER_TEMP}/ffmpeg_encoders.txt"
+          grep 'libx264' "${RUNNER_TEMP}/ffmpeg_encoders.txt"
+          grep 'aac' "${RUNNER_TEMP}/ffmpeg_encoders.txt"
       - name: Install limited runtime dependencies
         run: |
           python -m pip install -r requirements-ui.txt
