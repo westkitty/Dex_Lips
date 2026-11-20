@@ -58,6 +58,8 @@ Which is better? See [ACCURACY.md](ACCURACY.md) (8 short English clips, reviewer
 4. **Timing:** press *Analyze the actual audio*. Check the waveform strip, fix rows in the cue table, press *Apply*.
 5. **Preview** 2 seconds, then **Render verified MP4**. Download the MP4 and the receipt.
 
+**Dexter:** a ready-made Dexter mouth set, cut only from the owner-approved reference sheet, is in `assets/mouth_sets/dexter_muzzle/` (zip its nine PNGs to upload them), with the matching front-facing still at `assets/reference/dexter/dexter_front_still.png`. See `demos/demo_dexter_*.mp4`.
+
 Phone videos: variable or 29.97 fps clips are converted to a constant-rate working copy, and if the voice and video lengths differ you choose **trim** or **pad**. If the video already has a moving mouth, either confirm it is neutral or pick a **mouth cover** (patch or inpaint).
 
 ## What stays private

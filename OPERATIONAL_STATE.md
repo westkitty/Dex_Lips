@@ -101,6 +101,6 @@ Execute the bounded contract `prompts/CODEX_BUILD_PROMPT.md` from the verified r
 
 - Real Rhubarb 1.14.0 and a wav2vec2 phoneme recognizer both produce cues from real audio; BLOCKED path kept and tested.
 - `make accuracy` reproduces ACCURACY.md from 8 LibriSpeech clips with reviewer-judgment references (not ground truth).
-- Generic procedural muzzle mouth set shipped; Dexter set waiting for the approved reference sheet to be placed in the repo.
+- Generic procedural muzzle mouth set shipped. Dexter muzzle set built 2026-11-20 only from the owner-approved reference sheet (`assets/mouth_sets/dexter_muzzle/`), with Dexter demos for both engines.
 - Studio: click placement, waveform + cue-table timing editor, phone-video CFR + trim/pad, opt-in mouth cover, 2-second preview, crossfade, jaw modes (muzzle/beak/wide jaw), Python/browser tracing parity test, START_HERE.md.
 - Fixed: renderer dropped the final video frame when audio ended a few ms before it (e.g. FLAC input); audio is now padded.

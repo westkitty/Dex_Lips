@@ -1,69 +1,144 @@
 {
-  "rhubarb": {
-    "mode": "still",
-    "output_size": [
-      640,
-      480
-    ],
-    "source_size": [
-      640,
-      480
-    ],
-    "output_scale": 1.0,
-    "source_sha256": "5d672e1f70d7fca37353c823a61cf57f1c384eb466edc488029205db58b13b0f",
-    "output_sha256": "28bb3baef5a0c73d0d89df2e1b29a0e5d1424e7aa2baddf69f0944695e8867b6",
-    "fps": 24,
-    "frames_expected": 72,
-    "frames_observed": 72,
-    "audio_duration_sec": 2.99,
-    "preview_window": null,
-    "crossfade_sec": 0.04,
-    "mouth_cover": "none",
-    "output_duration_sec": 3.0,
-    "video_codec": "h264",
-    "audio_codec": "aac",
-    "cue_source": "EXTERNAL_JSON_UNVERIFIED_AUDIO_ALIGNMENT",
-    "claims": "COMPOSITING_PROVEN_NOT_AUTOMATIC_SPEECH_SYNC",
-    "cue_engine": {
-      "analysis": "Rhubarb from actual audio",
-      "cue_count": 14,
-      "recognizer": "pocketSphinx",
-      "output": "/workspace/Dex_Lips/demos/cues_rhubarb.json",
-      "engine": "rhubarb"
+  "generic": {
+    "rhubarb": {
+      "mode": "still",
+      "output_size": [
+        640,
+        480
+      ],
+      "source_size": [
+        640,
+        480
+      ],
+      "output_scale": 1.0,
+      "source_sha256": "5d672e1f70d7fca37353c823a61cf57f1c384eb466edc488029205db58b13b0f",
+      "output_sha256": "28bb3baef5a0c73d0d89df2e1b29a0e5d1424e7aa2baddf69f0944695e8867b6",
+      "fps": 24,
+      "frames_expected": 72,
+      "frames_observed": 72,
+      "audio_duration_sec": 2.99,
+      "preview_window": null,
+      "crossfade_sec": 0.04,
+      "mouth_cover": "none",
+      "output_duration_sec": 3.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "cue_source": "EXTERNAL_JSON_UNVERIFIED_AUDIO_ALIGNMENT",
+      "claims": "COMPOSITING_PROVEN_NOT_AUTOMATIC_SPEECH_SYNC",
+      "cue_engine": {
+        "analysis": "Rhubarb from actual audio",
+        "cue_count": 14,
+        "recognizer": "pocketSphinx",
+        "output": "/workspace/Dex_Lips/demos/cues_rhubarb.json",
+        "engine": "rhubarb"
+      },
+      "mouth_set": "assets/mouth_sets/generic_muzzle"
+    },
+    "wav2vec2": {
+      "mode": "still",
+      "output_size": [
+        640,
+        480
+      ],
+      "source_size": [
+        640,
+        480
+      ],
+      "output_scale": 1.0,
+      "source_sha256": "cc8ac0e1e9d59ee10d7be85cc765e8c495e09e2a8264b4fb1100cab7c6dadd9f",
+      "output_sha256": "8bd0f172d3615c165953255dc963a4681bd575b714170988a490db25abebd3bc",
+      "fps": 24,
+      "frames_expected": 72,
+      "frames_observed": 72,
+      "audio_duration_sec": 2.99,
+      "preview_window": null,
+      "crossfade_sec": 0.04,
+      "mouth_cover": "none",
+      "output_duration_sec": 3.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "cue_source": "EXTERNAL_JSON_UNVERIFIED_AUDIO_ALIGNMENT",
+      "claims": "COMPOSITING_PROVEN_NOT_AUTOMATIC_SPEECH_SYNC",
+      "cue_engine": {
+        "analysis": "wav2vec2 phoneme recognizer from actual audio",
+        "cue_count": 19,
+        "phoneme_count": 25,
+        "output": "/workspace/Dex_Lips/demos/cues_wav2vec2.json",
+        "model": "facebook/wav2vec2-lv-60-espeak-cv-ft",
+        "engine": "wav2vec2"
+      },
+      "mouth_set": "assets/mouth_sets/generic_muzzle"
     }
   },
-  "wav2vec2": {
-    "mode": "still",
-    "output_size": [
-      640,
-      480
-    ],
-    "source_size": [
-      640,
-      480
-    ],
-    "output_scale": 1.0,
-    "source_sha256": "cc8ac0e1e9d59ee10d7be85cc765e8c495e09e2a8264b4fb1100cab7c6dadd9f",
-    "output_sha256": "8bd0f172d3615c165953255dc963a4681bd575b714170988a490db25abebd3bc",
-    "fps": 24,
-    "frames_expected": 72,
-    "frames_observed": 72,
-    "audio_duration_sec": 2.99,
-    "preview_window": null,
-    "crossfade_sec": 0.04,
-    "mouth_cover": "none",
-    "output_duration_sec": 3.0,
-    "video_codec": "h264",
-    "audio_codec": "aac",
-    "cue_source": "EXTERNAL_JSON_UNVERIFIED_AUDIO_ALIGNMENT",
-    "claims": "COMPOSITING_PROVEN_NOT_AUTOMATIC_SPEECH_SYNC",
-    "cue_engine": {
-      "analysis": "wav2vec2 phoneme recognizer from actual audio",
-      "cue_count": 19,
-      "phoneme_count": 25,
-      "output": "/workspace/Dex_Lips/demos/cues_wav2vec2.json",
-      "model": "facebook/wav2vec2-lv-60-espeak-cv-ft",
-      "engine": "wav2vec2"
+  "dexter": {
+    "rhubarb": {
+      "mode": "still",
+      "output_size": [
+        640,
+        480
+      ],
+      "source_size": [
+        640,
+        480
+      ],
+      "output_scale": 1.0,
+      "source_sha256": "4ed9e32451ffc1d12a361067798549946e2857cbda96066ee9169f9a17ddd8ea",
+      "output_sha256": "2f942f438522da094e9d6e3197c67ee7f6e1cd8d5a83b491a52ed2abb70b6769",
+      "fps": 24,
+      "frames_expected": 72,
+      "frames_observed": 72,
+      "audio_duration_sec": 2.99,
+      "preview_window": null,
+      "crossfade_sec": 0.04,
+      "mouth_cover": "none",
+      "output_duration_sec": 3.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "cue_source": "EXTERNAL_JSON_UNVERIFIED_AUDIO_ALIGNMENT",
+      "claims": "COMPOSITING_PROVEN_NOT_AUTOMATIC_SPEECH_SYNC",
+      "cue_engine": {
+        "analysis": "Rhubarb from actual audio",
+        "cue_count": 14,
+        "recognizer": "pocketSphinx",
+        "output": "/workspace/Dex_Lips/demos/cues_rhubarb.json",
+        "engine": "rhubarb"
+      },
+      "mouth_set": "assets/mouth_sets/dexter_muzzle"
+    },
+    "wav2vec2": {
+      "mode": "still",
+      "output_size": [
+        640,
+        480
+      ],
+      "source_size": [
+        640,
+        480
+      ],
+      "output_scale": 1.0,
+      "source_sha256": "be6839f42bdcb27266324fda27d3218aeb38829943771e1015f5984223c8b8a9",
+      "output_sha256": "319201b1544b2090942bf07cf8d18e5eb94f7eb4b4208ed61f78fd9df8fbc559",
+      "fps": 24,
+      "frames_expected": 72,
+      "frames_observed": 72,
+      "audio_duration_sec": 2.99,
+      "preview_window": null,
+      "crossfade_sec": 0.04,
+      "mouth_cover": "none",
+      "output_duration_sec": 3.0,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "cue_source": "EXTERNAL_JSON_UNVERIFIED_AUDIO_ALIGNMENT",
+      "claims": "COMPOSITING_PROVEN_NOT_AUTOMATIC_SPEECH_SYNC",
+      "cue_engine": {
+        "analysis": "wav2vec2 phoneme recognizer from actual audio",
+        "cue_count": 19,
+        "phoneme_count": 25,
+        "output": "/workspace/Dex_Lips/demos/cues_wav2vec2.json",
+        "model": "facebook/wav2vec2-lv-60-espeak-cv-ft",
+        "engine": "wav2vec2"
+      },
+      "mouth_set": "assets/mouth_sets/dexter_muzzle"
     }
   }
 }

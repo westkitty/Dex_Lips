@@ -29,7 +29,7 @@ Full tables, per-shape confusion and the bias caveats: [ACCURACY.md](ACCURACY.md
 
 ## What is not yet proven / not built
 
-- **Dexter muzzle set:** the owner approved a Dexter reference sheet on 2026-11-20, but it has not been imported into the repo yet, so no Dexter art exists here. See `assets/mouth_sets/README.md` for the exact cells needed.
+- **Dexter muzzle set:** built from the owner-approved Dexter reference sheet (approved and imported 2026-11-20) in `assets/mouth_sets/dexter_muzzle/` — nine states cut and edited only from front-facing cells of the sheet; see `assets/mouth_sets/README.md` for the cells used. Dexter demos: `demos/demo_dexter_*.mp4`.
 - Accuracy beyond 8 short read-English clips; noisy, emotional, cartoon or non-English voices are untested.
 - Automatic mouth tracking or detection in video; neural talking-face models; persistent cloud hosting; Android tablet touch QA.
 - Any approved mouth art for Shard-God Tiger. Tiger's canonical reference is locked and cannot be used as a rig source.
