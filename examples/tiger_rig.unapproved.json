@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "character_id": "starsilk-shard-god-tiger",
+  "source_path": "assets/references/tiger_original_canonical.jpg",
+  "source_sha256": "098e017a4960e7eeda634ac58c3b2dafc7097f8af87cab439bfbb88d4c87d1e2",
+  "authority": "canonical_primary",
+  "approved": false,
+  "mouth_anchor": {
+    "x": 0.416,
+    "y": 0.194,
+    "rotation_deg": 0,
+    "scale": 1
+  },
+  "shapes": {},
+  "notes": "UNAPPROVED / INCOMPLETE. Anchor is an approximate draft only, not user-validated. Do not produce canonical exports until user-approved mouth sprites and anchors exist."
+}

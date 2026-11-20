@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dex_Lips Mouth Rig v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "character_id",
+    "source_path",
+    "source_sha256",
+    "authority",
+    "mouth_anchor",
+    "shapes",
+    "approved"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "character_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "authority": {
+      "enum": [
+        "canonical_primary",
+        "provisional",
+        "synthetic_demo",
+        "approved_user_rig"
+      ]
+    },
+    "approved": {
+      "type": "boolean"
+    },
+    "mouth_anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rotation_deg": {
+          "type": "number"
+        },
+        "scale": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "shapes": {
+      "type": "object",
+      "description": "Each value is a separately authored sprite path or vector shape reference; never implicitly derived from provisional sheet.",
+      "propertyNames": {
+        "enum": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "X"
+        ]
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "perspectives": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

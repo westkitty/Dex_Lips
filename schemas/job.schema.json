@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dex_Lips Job v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "media",
+    "audio",
+    "route",
+    "spend_cap_usd",
+    "cloud_consent"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "media": {
+      "type": "object",
+      "required": [
+        "path",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "image",
+            "video"
+          ]
+        }
+      }
+    },
+    "audio": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "route": {
+      "enum": [
+        "rig",
+        "human_neural_conditional"
+      ]
+    },
+    "rig": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "spend_cap_usd": {
+      "const": 0
+    },
+    "cloud_consent": {
+      "type": "boolean"
+    },
+    "output": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "QUEUED",
+        "WAITING_FOR_RIG",
+        "RUNNING",
+        "BLOCKED",
+        "FAILED",
+        "VERIFIED"
+      ]
+    }
+  }
+}

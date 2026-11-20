@@ -1,0 +1,32 @@
+# Release test matrix (all four are mandatory for a full claim)
+
+## Static/structural
+
+- Seed verifier exits 0 and both media hashes match manifest.
+- JSON job/rig schemas validate examples using a standards-compliant validator (after dependency selected).
+- No secret, models, cache, live recordings or personal outputs in staged files.
+- Entire interface works by keyboard and touch; no hidden controls only accessible via mouse.
+
+## Media E2E with actual export
+
+| ID | Scenario | Proof | Failure conditions |
+|----|----------|-------|-------------------|
+| T1 | Human-like still + spoken audio | MP4 with plausible synchronized mouth or clear blocked/fallback state | Generic static video labeled successful lip-sync; paid model silently invoked |
+| T2 | Human-like existing video + new spoken audio | Original camera/body/background preserved; mouth synced | Replaced entire scene; new face identity; incorrect original sound mix |
+| T3 | Nonhuman still + user-approved mouth art | Source anatomy/head/eyes unchanged; cue-driven mouth movement; MP4 | Human lips, changed head, unauthorized canon promotion |
+| T4 | Moving nonhuman video + mouth rig | Keyframed/trackable mouth anchor stays aligned through turns; MP4 | Drifting or detached mouth; unbounded manual fix concealed |
+
+For complete release, all four must actually pass with evidence. For MVP, the fully deterministic T3 (using a distinct **synthetic demo** rig, not Tiger canon) and T4 are minimum functional checkpoints; T1/T2 may remain `UNAVAILABLE_FREE_NEURAL` until evidence-backed hosted adapter works. Never mark the full contract PASS under that limitation.
+
+## Technical acceptance per rendered clip
+
+- Video file is decodable from first to last frame; codec/dimensions/FPS/duration are recorded.
+- Audio track present, non-silent where expected, start/end alignment error within one frame at output FPS in deterministic pipeline; measurable basis recorded.
+- Open/closed, rounded-vowel, silence cues inspected; anchor placement/occlusion/crossfade checked on multiple timestamps, including head motion.
+- File checksum recorded; no placeholder/source-only/static fake claimed as actual result.
+- Zero-dollar charges, cloud usage, external transfer consent and temp-space use recorded.
+- Manual visual verdict required for characters and AI models; automated tests alone do not prove canon.
+
+## Stop condition
+
+One bounded implementation pass and one repair pass. If a mandatory scenario remains blocked, report PARTIAL, exact failure, reproduction, and proposed next step; do not falsify PASS.

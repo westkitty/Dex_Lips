@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-11-19",
+  "asset_origin": "User-provided source media attached to this conversation; copyright and third-party distribution permissions not independently established.",
+  "assets": [
+    {
+      "source_upload_name": "1000233378.jpg",
+      "path": "assets/references/tiger_original_canonical.jpg",
+      "role": "CANONICAL_PRIMARY",
+      "mime_type_verified": "image/jpeg",
+      "sha256": "098e017a4960e7eeda634ac58c3b2dafc7097f8af87cab439bfbb88d4c87d1e2",
+      "byte_size": 253377,
+      "preservation_rule": "Immutable reference bytes; may be read or copied, never overwritten. Original head geometry supersedes provisional sheet."
+    },
+    {
+      "source_upload_name": "1000233387.png",
+      "path": "assets/references/tiger_expressions_provisional.jpg",
+      "role": "PROVISIONAL_NOT_CANON",
+      "mime_type_verified": "image/jpeg",
+      "sha256": "03fd4f144ebc005e70ce8e9e906da9979a94ebe1a6344982e49fcf2441e5a8b3",
+      "byte_size": 527255,
+      "preservation_rule": "Immutable reference bytes; may be read or copied, never overwritten. Original head geometry supersedes provisional sheet."
+    }
+  ]
+}

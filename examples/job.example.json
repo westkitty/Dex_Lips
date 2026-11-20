@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "job_id": "synthetic-demo-job",
+  "media": {
+    "path": "fixtures/demo-character.png",
+    "type": "image"
+  },
+  "audio": {
+    "path": "fixtures/demo-speech.wav",
+    "text": "An original sample phrase."
+  },
+  "route": "rig",
+  "rig": "fixtures/demo-rig.json",
+  "spend_cap_usd": 0,
+  "cloud_consent": false,
+  "status": "QUEUED",
+  "output": "outputs/synthetic-demo.mp4"
+}
