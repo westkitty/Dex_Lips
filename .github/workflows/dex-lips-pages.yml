@@ -77,6 +77,8 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: './site'
+      - name: Allow Pages artifact index to settle
+        run: sleep 12
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
