@@ -2,12 +2,12 @@
 
 **Status: locally verified deterministic lip-sync MVP, NOT a complete automatically recognizing or cloud-hosted product.**
 
-Dex_Lips takes a still image or existing video, a spoken audio recording and the character's separately authored mouth-sprite artwork. It applies reviewed Rhubarb-compatible mouth cues and creates an H.264/AAC MP4. It also includes an optional adapter for the real [Rhubarb Lip Sync](https://github.com/DanielSWolf/rhubarb-lip-sync) CLI: if that executable is installed, it can derive cues from actual speech. If missing, automatic recognition is BLOCKED, not replaced by pretend cues.
+Dex_Lips takes a still image or existing video, a spoken audio recording, and mouth artwork generated in-app or separately authored by the user. It applies reviewed Rhubarb-compatible mouth cues and creates an H.264/AAC MP4. It also includes an optional adapter for the real [Rhubarb Lip Sync](https://github.com/DanielSWolf/rhubarb-lip-sync) CLI: if that executable is installed, it can derive cues from actual speech. If missing, automatic recognition is BLOCKED, not replaced by pretend cues.
 
 ## What currently works
 
 - Gradio upload/edit/render interface, bound to `127.0.0.1` (not publicly shared) with actual MP4 output and receipt.
-- User-authorized mouth sprites (PNG) packaged as a ZIP, user-adjustable placement, editable cue JSON, moving-video keyframes.
+- In-app source-conditioned draft mouth-asset generation (nine transparent PNGs + ZIP, with explicit visual review), user-authorized imported mouth sprites (PNG) packaged as a ZIP, user-adjustable placement, editable cue JSON, moving-video keyframes.
 - Input integrity checks, canonical-source SHA-256 refusal, no overwrite of originals, per-job bounded scratch processing.
 - Portrait/landscape stills and videos downsampled to even H.264 dimensions within 1280×720; original source files are never edited.
 - Repeatable synthetic still and moving-video tests plus spoken-audio/manual-timing integration checks.
@@ -32,9 +32,15 @@ python3 app.py
 
 Open `http://127.0.0.1:7860` on the **same** machine. The app binds only to localhost and does **not** create a public or remote URL. The synthetic self-test is available under its own tab; it is visibly not speech recognition.
 
-### Make your own mouth rig ZIP
+### Generate mouth assets directly in Dex_Lips
 
-Supply separately drawn transparent sprites in one ZIP:
+In the **Render** tab, upload a source image or video, select the approximate mouth location, choose width/height, choose **soft** or **faceted** graphic geometry, then click **Generate draft mouth assets from source**. The app samples color near the indicated mouth, constructs **nine separate editable transparent PNGs** (X, A–H), previews the open D pose over your original, and produces a source-hash-bound ZIP that is filled into the render input automatically. You can download the ZIP and edit the sprites in any ordinary painting tool. No external art generator or paid API is needed.
+
+This is a **deterministic source-conditioned draft**, **not** image understanding or exact contour extraction. It does **not** detect a mouth automatically, sample its anatomical shape, produce natural teeth/tongue, repair a speaking mouth visible in source video, or ensure it matches a particular creature. X is fully transparent to show the source's existing neutral/rest face. The user must visually review the preview and explicitly approve the generated mouth art **for this job** before rendering. For a canonical character such as Tiger, the bundled reference-image hash remains protected and the tool refuses unapproved automated rig generation from that reference. No canon approval is implied.
+
+### Or supply your own mouth rig ZIP
+
+Alternatively, supply separately drawn transparent sprites in one ZIP:
 
 ```text
 mouth_rig.zip
