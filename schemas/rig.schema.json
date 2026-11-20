@@ -33,6 +33,7 @@
       "enum": [
         "canonical_primary",
         "provisional",
+        "generated_draft",
         "synthetic_demo",
         "approved_user_rig"
       ]
@@ -69,7 +70,7 @@
     },
     "shapes": {
       "type": "object",
-      "description": "Each value is a separately authored sprite path or vector shape reference; never implicitly derived from provisional sheet.",
+      "description": "Each value is a user-authored or user-reviewed generated transparent PNG path. Generated drafts cannot claim canonical authority.",
       "propertyNames": {
         "enum": [
           "A",
