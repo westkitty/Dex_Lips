@@ -66,3 +66,11 @@ Execute the bounded contract `prompts/CODEX_BUILD_PROMPT.md` from the verified r
 - **Unverified:** true Galaxy Tab S9 Ultra end-to-end rendering (one CDP timeout before loading media), 30s+ resource stability, accurate mouth replacement through head turns, peak total-process memory, same-machine parity vs Python/FFmpeg, and deployable nonhuman UI. Android codec capability check alone passed.
 - Champion remains default. Verdict: **COMPETES**, NOT SURPASSES. Promote nothing from the experimental engine into production until the missing gates pass.
 - Security and storage: the small experiment excludes npm vendor packages and browser models; browser load still needs ~40 MB speech assets. The archived Mac scratch directory was observed around 427 MiB and remained uncleaned; its removal requires a separate safe storage action.
+
+## 2026-11-20 — Generated mouth assets (feature branch, NOT product-verified)
+
+- User explicitly corrected the scope: Dex_Lips must CREATE its own mouth assets; no external drawing/ZIP is a mandatory input. This is a required built-in capability.
+- Feature-branch implementation adds deterministic, source-palette draft overlays X/A–H for still images and sampled video frames, nine PNGs, a visual D-pose preview, downloadable ZIP and automatic ZIP selection in Gradio. Creator does not detect mouth location; the user positions the mouth center and width/height. It does not infer anatomy or repair original animated mouths.
+- Generated ZIP carries `generated_draft` / `approved: false`. The existing staging importer converts it to job-scoped user-reviewed `approved_user_rig` only after the explicit approval checkbox. Bundled canonical/provisional reference hashes are excluded from generated-rig route.
+- Proposed tests cover sprite packaging, zero mutation of source, protected reference, invalid inputs, and video-frame sampling. They have NOT been executed in this connector-only session; target-runtime Gradio/MP4 and Android validation are still pending. Do not claim end-to-end verified until executed.
+- Pending: run all existing/new tests and actual generated-mouth ZIP → real speech-derived cues → rendered MP4, assess feature quality with nonhuman source, then merge if successful. Existing manual-import compositor remains intact.
