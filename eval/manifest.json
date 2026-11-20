@@ -1,0 +1,90 @@
+{
+ "description": "Dex_Lips mouth-cue evaluation set. Audio: 8 utterances from LibriSpeech test-clean (8 different speakers).",
+ "dataset": "LibriSpeech ASR corpus, test-clean subset",
+ "dataset_citation": "V. Panayotov, G. Chen, D. Povey, S. Khudanpur, \"LibriSpeech: an ASR corpus based on public domain audio books\", ICASSP 2015. https://www.openslr.org/12",
+ "license": "CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+ "retrieved_via": "Hugging Face datasets-server rows API for dataset openslr/librispeech_asr, config clean, split test (2026-11-20). Audio files are byte-for-byte the FLAC served for each row.",
+ "reference_cues_disclaimer": "Reference mouth cues are the Grok Bot reviewer's own judgment (semi-automatic draft + visual spectrogram review), NOT ground truth. See eval/README.md.",
+ "clips": [
+  {
+   "id": "6930-75918-0000",
+   "file": "eval/clips/6930-75918-0000.flac",
+   "speaker_id": 6930,
+   "transcript": "CONCORD RETURNED TO ITS PLACE AMIDST THE TENTS",
+   "duration_sec": 3.505,
+   "hf_row_idx": 0,
+   "sha256": "9ce35224156f071ab58eb7feb8a5ceae600f6f9f353da2a6cbf797b6b1ac8a23",
+   "source": "LibriSpeech test-clean utterance 6930-75918-0000 (speaker 6930, chapter 75918)"
+  },
+  {
+   "id": "1320-122617-0030",
+   "file": "eval/clips/1320-122617-0030.flac",
+   "speaker_id": 1320,
+   "transcript": "SO CHOOSE FOR YOURSELF TO MAKE A RUSH OR TARRY HERE",
+   "duration_sec": 3.98,
+   "hf_row_idx": 108,
+   "sha256": "4c8d784cdabeee30a41fbb6f14beb076f660d8d5a55587b68afa5391525f6a85",
+   "source": "LibriSpeech test-clean utterance 1320-122617-0030 (speaker 1320, chapter 122617)"
+  },
+  {
+   "id": "5639-40744-0008",
+   "file": "eval/clips/5639-40744-0008.flac",
+   "speaker_id": 5639,
+   "transcript": "WHO TOUCHES ME AM I IN BED",
+   "duration_sec": 2.215,
+   "hf_row_idx": 145,
+   "sha256": "ad34d071015bb44b3aa347805e273ce1b0e31f2e709fa32243f8c9e2a47d99d9",
+   "source": "LibriSpeech test-clean utterance 5639-40744-0008 (speaker 5639, chapter 40744)"
+  },
+  {
+   "id": "260-123440-0000",
+   "file": "eval/clips/260-123440-0000.flac",
+   "speaker_id": 260,
+   "transcript": "AND HOW ODD THE DIRECTIONS WILL LOOK",
+   "duration_sec": 2.165,
+   "hf_row_idx": 179,
+   "sha256": "6ca7d1967ad62c547a118c92e1fe07ab3149b84715306dd6c3696cb4f1d3c438",
+   "source": "LibriSpeech test-clean utterance 260-123440-0000 (speaker 260, chapter 123440)"
+  },
+  {
+   "id": "7729-102255-0000",
+   "file": "eval/clips/7729-102255-0000.flac",
+   "speaker_id": 7729,
+   "transcript": "THE BOGUS LEGISLATURE NUMBERED THIRTY SIX MEMBERS",
+   "duration_sec": 3.285,
+   "hf_row_idx": 261,
+   "sha256": "3e143b9c2d525646a0db1f149607f686cb2b7bcaa00aa8732a58aa92a5ab2f76",
+   "source": "LibriSpeech test-clean utterance 7729-102255-0000 (speaker 7729, chapter 102255)"
+  },
+  {
+   "id": "2094-142345-0004",
+   "file": "eval/clips/2094-142345-0004.flac",
+   "speaker_id": 2094,
+   "transcript": "AND WHAT THROUGH THE LEFT HAND WINDOW",
+   "duration_sec": 2.64,
+   "hf_row_idx": 312,
+   "sha256": "de2ffb60c2b2a5d1c9c3cce598322ded7b9870252387df184019124d57137b33",
+   "source": "LibriSpeech test-clean utterance 2094-142345-0004 (speaker 2094, chapter 142345)"
+  },
+  {
+   "id": "3575-170457-0001",
+   "file": "eval/clips/3575-170457-0001.flac",
+   "speaker_id": 3575,
+   "transcript": "WHY ARE WE TO BE DENIED EACH OTHER'S SOCIETY",
+   "duration_sec": 2.99,
+   "hf_row_idx": 370,
+   "sha256": "7c88157fc69275c820d08c8ff75c9ef42ccf8588d3255b4feabb878e95a29494",
+   "source": "LibriSpeech test-clean utterance 3575-170457-0001 (speaker 3575, chapter 170457)"
+  },
+  {
+   "id": "7127-75947-0002",
+   "file": "eval/clips/7127-75947-0002.flac",
+   "speaker_id": 7127,
+   "transcript": "DO YOU THINK SO SHE REPLIED WITH INDIFFERENCE",
+   "duration_sec": 3.235,
+   "hf_row_idx": 428,
+   "sha256": "64354098b5ab1ea4e6e5853a4a9278ec02f99d5e95b64713995e1e8808312a69",
+   "source": "LibriSpeech test-clean utterance 7127-75947-0002 (speaker 7127, chapter 75947)"
+  }
+ ]
+}

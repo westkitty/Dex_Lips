@@ -1,0 +1,145 @@
+{
+ "clip": "2094-142345-0004",
+ "transcript": "AND WHAT THROUGH THE LEFT HAND WINDOW",
+ "status": "REVIEWER_JUDGMENT_NOT_GROUND_TRUTH",
+ "method": "Draft from eval/tools/draft_reference.py (wav2vec2-base-960h character forced alignment of the LibriSpeech transcript for word boundaries, espeak-ng en-us pronunciations, weighted phoneme durations, documented phoneme->shape table), then visual review of a spectrogram with the cue overlay.",
+ "review": {
+  "reviewer": "Grok Bot (automated assistant), 2026-11-20",
+  "checked": "word onsets/offsets and pauses against the spectrogram for the whole clip",
+  "edits": "No timing edits: word boundaries and pauses matched visible onsets/offsets within about 1-2 frames (20-40 ms) at the review resolution."
+ },
+ "word_spans": [
+  [
+   "and",
+   0.56,
+   0.72
+  ],
+  [
+   "what",
+   0.72,
+   0.88
+  ],
+  [
+   "through",
+   0.92,
+   1.14
+  ],
+  [
+   "the",
+   1.16,
+   1.28
+  ],
+  [
+   "left",
+   1.28,
+   1.45
+  ],
+  [
+   "hand",
+   1.46,
+   1.72
+  ],
+  [
+   "window",
+   1.72,
+   2.1
+  ]
+ ],
+ "mouthCues": [
+  {
+   "start": 0.0,
+   "end": 0.56,
+   "value": "X"
+  },
+  {
+   "start": 0.56,
+   "end": 0.64,
+   "value": "C"
+  },
+  {
+   "start": 0.64,
+   "end": 0.72,
+   "value": "B"
+  },
+  {
+   "start": 0.72,
+   "end": 0.77,
+   "value": "F"
+  },
+  {
+   "start": 0.77,
+   "end": 0.84,
+   "value": "C"
+  },
+  {
+   "start": 0.84,
+   "end": 1.04,
+   "value": "B"
+  },
+  {
+   "start": 1.04,
+   "end": 1.16,
+   "value": "F"
+  },
+  {
+   "start": 1.16,
+   "end": 1.21,
+   "value": "B"
+  },
+  {
+   "start": 1.21,
+   "end": 1.28,
+   "value": "C"
+  },
+  {
+   "start": 1.28,
+   "end": 1.32,
+   "value": "H"
+  },
+  {
+   "start": 1.32,
+   "end": 1.38,
+   "value": "C"
+  },
+  {
+   "start": 1.38,
+   "end": 1.42,
+   "value": "G"
+  },
+  {
+   "start": 1.42,
+   "end": 1.52,
+   "value": "B"
+  },
+  {
+   "start": 1.52,
+   "end": 1.61,
+   "value": "C"
+  },
+  {
+   "start": 1.61,
+   "end": 1.72,
+   "value": "B"
+  },
+  {
+   "start": 1.72,
+   "end": 1.78,
+   "value": "F"
+  },
+  {
+   "start": 1.78,
+   "end": 2.0,
+   "value": "B"
+  },
+  {
+   "start": 2.0,
+   "end": 2.1,
+   "value": "F"
+  },
+  {
+   "start": 2.1,
+   "end": 2.64,
+   "value": "X"
+  }
+ ]
+}

@@ -86,6 +86,15 @@ def main():
         slider(page,'mouthX','50')
         page.locator('#generate').click()
         assert 'Nine separate mouth sprites' in page.locator('#message').inner_text(),page.locator('#message').inner_text()
+        # Nonhuman construction modes (shared trace_core.js) in both source and graphic paths.
+        for jaw in ('muzzle','beak','wide-jaw'):
+            page.locator('#jaw').select_option(jaw)
+            page.locator('#generate').click()
+            assert 'Nine separate mouth sprites' in page.locator('#message').inner_text(),(jaw,page.locator('#message').inner_text())
+        page.locator('#mode').select_option('soft')
+        page.locator('#generate').click()
+        assert 'Nine separate mouth sprites' in page.locator('#message').inner_text()
+        assert page.evaluate("typeof DexTraceCore.poseBox==='function'")
         assert not errors,errors
         page.set_viewport_size({'width':390,'height':844})
         page.screenshot(path=str(root/'mobile.png'),full_page=True)

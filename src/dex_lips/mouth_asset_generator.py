@@ -17,7 +17,8 @@ import subprocess
 import zipfile
 
 from PIL import Image, ImageDraw, UnidentifiedImageError
-from .source_geometry import trace_mouth, GeometryTraceError
+from .source_geometry import trace_mouth, GeometryTraceError, JAW_MODES
+from . import muzzle_template
 
 
 class MouthAssetError(ValueError):
@@ -27,7 +28,7 @@ class MouthAssetError(ValueError):
 IMAGE_EXTS = frozenset({'.png', '.jpg', '.jpeg', '.webp'})
 VIDEO_EXTS = frozenset({'.mp4', '.mov', '.webm', '.mkv'})
 MOUTH_SHAPES = 'XABCDEFGH'
-PRESETS = frozenset({'soft', 'faceted', 'source-soft', 'source-faceted'})
+PRESETS = frozenset({'soft', 'faceted', 'source-soft', 'source-faceted', 'muzzle-template'})
 MAX_SOURCE_BYTES = 40 * 1024 * 1024
 MAX_PIXELS = 35_000_000
 MAX_SPRITE_SIDE = 1024
@@ -114,23 +115,17 @@ def _color_sample(image: Image.Image, x: float, y: float, width_frac: float, hei
     return tuple(sorted(c[i] for c in values)[len(values) // 2] for i in range(3))
 
 
-def _opening(shape: str) -> tuple[float, float]:
-    # Width/height ratios of a bounded graphic area, not claims about anatomy.
-    return {
-        'A': (.66, .10), 'B': (.54, .30), 'C': (.76, .50),
-        'D': (.83, .82), 'E': (.46, .80), 'F': (.39, .54),
-        'G': (.75, .24), 'H': (.70, .15),
-    }[shape]
-
-
-def _draw_sprite(w: int, h: int, shape: str, preset: str, surround: tuple[int, int, int]) -> Image.Image:
+def _draw_sprite(w: int, h: int, shape: str, preset: str, surround: tuple[int, int, int],
+                 jaw: str = 'human') -> Image.Image:
     picture = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     if shape == 'X':  # Show the original neutral mouth exactly; don't invent a rest face.
         return picture
     draw = ImageDraw.Draw(picture)
-    mw, mh = _opening(shape)
-    cx, cy = w // 2, h // 2
+    mode = JAW_MODES[jaw]
+    mw, mh = mode['ratios'][shape]
     half_w, half_h = max(2, int(w * mw * .46)), max(1, int(h * mh * .43))
+    cx = w // 2
+    cy = min(h // 2, int(h * .05) + half_h) if mode['anchor'] == 'top' else h // 2
     # Automatically chosen dark cavity and edge avoid human lips, teeth and tongue.
     cavity = tuple(max(0, min(255, int(v * .18))) for v in surround) + (255,)
     edge = tuple(max(4, min(255, int(v * .48))) for v in surround) + (255,)
@@ -154,7 +149,7 @@ def create_draft_mouth_rig(
     source: str | Path, destination: str | Path, *,
     mouth_x: float, mouth_y: float, width_fraction: float = .13,
     height_fraction: float = .065, preset: str = 'soft', frame_time: float = 0.0,
-    contrast: str = 'auto',
+    contrast: str = 'auto', jaw: str = 'human',
 ) -> dict:
     """Create individual editable PNGs + review ZIP, with zero canonical approval.
 
@@ -185,6 +180,8 @@ def create_draft_mouth_rig(
         raise MouthAssetError('Mouth style must be soft, faceted, source-soft or source-faceted')
     if contrast not in ('auto', 'dark', 'light'):
         raise MouthAssetError('Mouth contrast must be auto, dark or light')
+    if jaw not in JAW_MODES:
+        raise MouthAssetError('Jaw mode must be one of: ' + ', '.join(JAW_MODES))
     if destination.exists():
         raise MouthAssetError('Output folder exists; refusing to overwrite prior assets')
     frame, original_w, original_h = _frame(source, frame_time)
@@ -200,12 +197,21 @@ def create_draft_mouth_rig(
                 frame, x=mouth_x, y=mouth_y,
                 width_fraction=width_fraction, height_fraction=height_fraction,
                 output_size=(width, height), style=preset.removeprefix('source-'),
-                contrast=contrast)
+                contrast=contrast, jaw=jaw)
         except GeometryTraceError as exc:
             raise MouthAssetError(f'Source-traced mouth unavailable: {exc}') from exc
+    elif preset == 'muzzle-template':
+        # Generic procedural muzzle (not any specific character), outline tinted
+        # from the paint around the selected region. X stays transparent so the
+        # source's own rest face shows, like every in-app rig.
+        palette = _color_sample(frame, mouth_x, mouth_y, width_fraction, height_fraction)
+        line = tuple(max(0, min(255, int(v * .30))) for v in palette) + (255,)
+        sprites = {label: muzzle_template.draw_pose(label, width, height, {'line': line})
+                   for label in MOUTH_SHAPES}
+        sprites['X'] = Image.new('RGBA', (width, height), (0, 0, 0, 0))
     else:
         palette = _color_sample(frame, mouth_x, mouth_y, width_fraction, height_fraction)
-        sprites = {label: _draw_sprite(width, height, label, preset, palette)
+        sprites = {label: _draw_sprite(width, height, label, preset, palette, jaw)
                    for label in MOUTH_SHAPES}
     destination.mkdir(mode=0o700, parents=False)
     try:
@@ -220,7 +226,8 @@ def create_draft_mouth_rig(
             'authority': 'generated_draft', 'approved': False,
             'mouth_anchor': {'x': mouth_x, 'y': mouth_y, 'scale': 1.0, 'rotation_deg': 0},
             'shapes': shapes,
-            'notes': ('Draft mode: ' + preset + '; actual source-traced silhouette only when source-* selected. '
+            'jaw_mode': jaw,
+            'notes': ('Draft mode: ' + preset + ' / jaw ' + jaw + '; actual source-traced silhouette only when source-* selected. '
                       'No anatomy recognition or canonical approval. Visual review is mandatory. '
                       + (json.dumps(trace_report, sort_keys=True) if trace_report else 'Graphic shapes only.')),
         }

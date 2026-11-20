@@ -38,3 +38,8 @@ workspace/
 *.flac
 *.zip
 # The source references in assets/references/ are exceptions: checked-in, small, user-supplied, private.
+# Deliberate, small, openly licensed exceptions:
+# - LibriSpeech test-clean evaluation clips (CC BY 4.0, see eval/manifest.json)
+# - engine demo MP4s made from procedural art + one of those clips
+!eval/clips/*.flac
+!demos/*.mp4

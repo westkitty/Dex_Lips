@@ -1,23 +1,39 @@
 # Dex_Lips
 
-**Status: locally verified deterministic lip-sync MVP, NOT a complete automatically recognizing or cloud-hosted product.**
+**Status (2026-11-20): locally verified lip-sync studio with two real automatic mouth-timing engines. Not a cloud-hosted product.** New here? Read [START_HERE.md](START_HERE.md).
 
-Dex_Lips takes a still image or existing video, a spoken audio recording, and mouth artwork generated in-app or separately authored by the user. It applies reviewed Rhubarb-compatible mouth cues and creates an H.264/AAC MP4. It also includes an optional adapter for the real [Rhubarb Lip Sync](https://github.com/DanielSWolf/rhubarb-lip-sync) CLI: if that executable is installed, it can derive cues from actual speech. If missing, automatic recognition is BLOCKED, not replaced by pretend cues.
+Dex_Lips takes a still image or existing video, a spoken audio recording, and mouth artwork generated in-app or separately authored by the user. It creates Rhubarb-compatible mouth cues (nine shapes X, A–H) and renders an H.264/AAC MP4. Automatic cues come only from an engine that actually ran on the audio:
+
+- **[Rhubarb Lip Sync](https://github.com/DanielSWolf/rhubarb-lip-sync)** (installed binary, MIT), and/or
+- a **wav2vec2 phoneme recognizer** ([facebook/wav2vec2-lv-60-espeak-cv-ft](https://huggingface.co/facebook/wav2vec2-lv-60-espeak-cv-ft), Apache-2.0), mapped to the same nine shapes.
+
+If neither is available, automatic recognition is **BLOCKED**, never replaced by pretend cues.
+
+## Accuracy (8 LibriSpeech clips, 24 s, reviewer-judged reference — not ground truth)
+
+| Engine | Frame accuracy | Median boundary offset |
+|---|---|---|
+| Rhubarb 1.14.0 (pocketSphinx, audio only) | 55.6% | 40 ms |
+| wav2vec2 phoneme recognizer (audio only) | 67.4% | 30 ms |
+
+Full tables, per-shape confusion and the bias caveats: [ACCURACY.md](ACCURACY.md). Reproduce with `make accuracy`.
 
 ## What currently works
 
-- Gradio upload/edit/render interface, bound to `127.0.0.1` (not publicly shared) with actual MP4 output and receipt.
-- In-app source-conditioned draft mouth-asset generation (nine transparent PNGs + ZIP, with explicit visual review), user-authorized imported mouth sprites (PNG) packaged as a ZIP, user-adjustable placement, editable cue JSON, moving-video keyframes.
-- Input integrity checks, canonical-source SHA-256 refusal, no overwrite of originals, per-job bounded scratch processing.
-- Portrait/landscape stills and videos downsampled to even H.264 dimensions within 1280×720; original source files are never edited.
-- Repeatable synthetic still and moving-video tests plus spoken-audio/manual-timing integration checks.
-- Bounded CPU and temporary disk, bounded cue counts, and optional real Rhubarb `--exportFormat json` integration; no neural weights, paid APIs, telemetry or cloud uploads.
+- Gradio studio bound to `127.0.0.1` (never `share=True`): click-on-picture mouth placement, draft mouth generation (source tracing, graphic shapes, generic muzzle template) with **jaw modes** (human, muzzle, beak, wide jaw), automatic cues from either engine, a **timing editor** (waveform with cue bands + editable cue table), **2-second preview**, configurable **crossfade** between shapes, MP4 + receipt.
+- **Phone videos:** variable / 29.97 fps converted to a constant-rate working copy; mismatched audio/video lengths resolved by the user's **trim** or **pad** choice (listed in the receipt).
+- Opt-in **mouth cover** (patch, or OpenCV inpaint) to hide an existing mouth in video; follows the anchor/keyframes (not tracking).
+- Python and browser mouth tracing share one specification, enforced by an exact parity test that runs the real `site/assets/trace_core.js` under Node.
+- Generic procedural **muzzle mouth set** in `assets/mouth_sets/generic_muzzle/`; engine demo MP4s in `demos/`.
+- Input integrity checks, canonical-source SHA-256 refusal, no overwrite of originals, bounded per-job scratch processing; no paid APIs, telemetry or cloud uploads.
 
-## What is not yet proven
+## What is not yet proven / not built
 
-- A genuine installed Rhubarb binary recognizing speech end to end on the target runtime (none installed in the last test container).
-- Fully automatic existing-video mouth removal and tracking, webcam capture, neural human-avatar models, offline-browser-only MP4, persistent cloud hosting, or Android tablet touch-runtime QA.
-- Any approved mouth art for Shard-God Tiger. Tiger's canonical reference is locked and cannot be used as a synthetic rig.
+- **Dexter muzzle set:** built from the owner-approved Dexter reference sheet (approved and imported 2026-11-20) in `assets/mouth_sets/dexter_muzzle/` — nine states cut and edited only from front-facing cells of the sheet; see `assets/mouth_sets/README.md` for the cells used. Dexter demos: `demos/demo_dexter_*.mp4`.
+- Accuracy beyond 8 short read-English clips; noisy, emotional, cartoon or non-English voices are untested.
+- Automatic mouth tracking or detection in video; neural talking-face models; persistent cloud hosting; Android tablet touch QA.
+- Any approved mouth art for Shard-God Tiger. Tiger's canonical reference is locked and cannot be used as a rig source.
+- **Code license: UNDECIDED** (owner decision; see `docs/RIGHTS.md`).
 
 ## Run in a disposable, authorized Python environment
 
@@ -59,7 +75,7 @@ Rhubarb uses six core shapes A–F; X/G/H are optional to that algorithm, but **
 
 Upload your source, voice recording and ZIP, confirm you own or have authority to use the mouth sprites, then either:
 
-1. Press **Analyze the actual audio** if Rhubarb is installed; review the generated cue JSON, or
+1. Press **Analyze the actual audio** (Rhubarb or wav2vec2 must be installed; otherwise it reports BLOCKED); review the cues in the timing editor, or
 2. Paste real/hand-edited Rhubarb-style `mouthCues` JSON (`examples/mouthCues.example.json` shows the format).
 
 For moving footage add time-keyframed mouth anchors. The existing mouth must already be neutral/masked or it will appear beneath the overlay; the app blocks video export without acknowledgement. Press **Render verified MP4**, inspect the downloadable clip, and review the JSON receipt for exact limitations.
@@ -70,9 +86,10 @@ For moving footage add time-keyframed mouth anchors. The existing mouth must alr
 python3 scripts/verify_seed.py
 python3 -m unittest discover -s tests -v
 PYTHONPATH=src python3 scripts/proof_smoke.py
+make accuracy        # rewrites ACCURACY.md from eval/ (runs whichever engines are installed)
 ```
 
-`proof_smoke.py` is an authored-cue compositor test using artificial tones, **not** a phonetic lip-sync test. The spoken-voice fixture in the suite uses actual `espeak` voice audio where available but manually defined mouth cues. The Rhubarb CLI adapter's fake binary test exercises wiring only, **not** recognition accuracy. Do not call automatic speech-to-mouth sync verified until a real Rhubarb binary and representative voice recording pass.
+`proof_smoke.py` is an authored-cue compositor test using artificial tones, **not** a phonetic lip-sync test. The spoken-voice fixture in the suite uses actual `espeak` voice audio where available but manually defined mouth cues. The Rhubarb stub test exercises wiring only; `tests/test_engines_eval.py` additionally runs the **real** Rhubarb binary (skipped if it is not on PATH; CI installs it) and the wav2vec2 engine (skipped unless the model is cached) on real LibriSpeech speech. Accuracy: `make accuracy`.
 
 ## Project authority and sources
 
