@@ -32,3 +32,13 @@ For complete release, all four must actually pass with evidence. For MVP, T3 (us
 ## Stop condition
 
 One bounded implementation pass and one repair pass. If a mandatory scenario remains blocked, report PARTIAL, exact failure, reproduction, and proposed next step; do not falsify PASS.
+
+## Current proof status (2026-11-19 QQQ pass)
+
+- T1: **PARTIAL** — deterministic user-authored rig can render a portrait with reviewed cues; neural portrait automatic route NOT AVAILABLE.
+- T2: **PARTIAL** — existing video deterministic overlay with source FPS/length validation and user-confirmed neutral mouth; no automatic human lip substitution.
+- T3: **PARTIAL** — synthetic/noncanonical sprite rig + authored cues + MP4 with actual spoken audio; Tiger-specific canonical rig approval MISSING; real Rhubarb not yet installed.
+- T4: **PARTIAL** — two-second synthetic video keyframes + actual decodable MP4; no automated head turns/occlusion/mouth removal, and real-world footage NOT VALIDATED.
+- Source hash guard: **PASS**. 19 local tests: **PASS** at time of report. Desktop Gradio HTTP smoke: **PASS**. Android: **UNVERIFIED**. Cloud hosted $0: **UNVERIFIED**.
+
+No original full-contract PASS is justified. See `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md` for evidence, performance measurements, and remaining blockers.

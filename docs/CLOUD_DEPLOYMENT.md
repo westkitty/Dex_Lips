@@ -29,3 +29,7 @@
 ## Hosting price and eligibility source (reverified 2026-11-19)
 
 Official Hugging Face Spaces overview, https://huggingface.co/docs/hub/spaces-overview : "Static Spaces are free for everyone. Gradio and Docker Spaces run on compute and require a paid plan to create ... Free personal accounts in good standing can still host up to 2 Gradio Spaces running on ZeroGPU." This supersedes older advice that free CPU Basic Gradio Spaces can be created by any free user. No account-specific eligibility test or deployment has occurred; `HOSTED_FREE_UNVERIFIED` remains the default.
+
+## Implementation status 2026-11-19
+
+The working editor runs locally and binds exclusively to `127.0.0.1`. No Space or paid runtime was created. Ordinary new Gradio/Docker Spaces require paid-plan eligibility even on $0/hour CPU Basic hardware; free ZeroGPU Gradio Spaces are conditional, not a universal CPU fallback. A static Space cannot execute the Python Rhubarb/FFmpeg backend. Treat both free hosted deployment and mobile browser access as unverified. See `README.md` and `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md`.

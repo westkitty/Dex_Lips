@@ -4,7 +4,7 @@ Updated: 2026-11-19 (America/Detroit)
 
 ## Controlling user objective
 
-Create a reusable $0 lip-sync studio for user-supplied stills/videos and recorded speech, including nonhuman and stylized characters, with browser/hosted-first execution and minimal local storage. Supply an executable Codex prompt and maintain source references. The current work unit is repository/Drive seed creation, NOT the actual full implementation.
+Create a reusable $0 lip-sync studio for user-supplied stills/videos and recorded speech, including nonhuman and stylized characters, with browser/hosted-first execution and minimal local storage. Supply an executable Codex prompt and maintain source references. A local-only deterministic editor/rendering MVP now exists; full automatic speech analysis, advanced video mouth removal, and free cloud deployment remain unproven.
 
 ## Known-good seed invariants
 
@@ -17,13 +17,13 @@ Create a reusable $0 lip-sync studio for user-supplied stills/videos and recorde
 ## Status by capability
 
 - Source-reference packaging and validation: completed locally (run verifier again after cloning).
-- Workable Gradio/HTML editor: NOT BUILT.
-- Rhubarb integration: NOT BUILT.
-- Still-image character lip-sync: NOT BUILT.
-- Existing-video mouth animation and tracking: NOT BUILT.
+- Gradio editor: IMPLEMENTED, local HTTP startup and backend render verified; Android touch interactions unverified.
+- Rhubarb CLI integration: IMPLEMENTED and stub-adapter tested; REAL EXECUTABLE MISSING in tested runtime; phonetic recognition UNVERIFIED.
+- Still-image user-approved mouth rig + manual cue render: VERIFIED in isolated runtime; exact phonetic lip-sync depends on real Rhubarb.
+- Existing-video keyframed overlay: VERIFIED synthetic clip only; automatic tracking/removal NOT BUILT.
 - MuseTalk/SadTalker hosted adapters: NOT BUILT / CONDITIONAL.
 - Browser WebAssembly fallback: UNVERIFIED; never promise.
-- Audio/video export and artifact validation: NOT BUILT.
+- Audio/video H.264/AAC MP4 export: VERIFIED on synthetic media and manually aligned spoken audio in isolated container; no actual target-machine proof.
 - Hugging Face ZeroGPU eligibility, billing state, and deployment: UNVERIFIED.
 - Automated Google Drive archive: NOT BUILT; avoid broad OAuth credentials.
 
@@ -47,3 +47,13 @@ Execute the bounded contract `prompts/CODEX_BUILD_PROMPT.md` from the verified r
 - **Confirmed specification correction:** ordinary Gradio/Docker compute Spaces require paid plan for new creation; eligible free ZeroGPU Spaces are the exception. Do not create paid hosted compute; static frontend is a separate, non-backend fallback.
 - **Regression protection:** the proof renderer rejects bundled Tiger reference hashes even when an untrusted rig JSON lies about authority; renders refuse output overwrite; synthetic tests and manifest locks must remain intact.
 - **Remaining next step:** execute the build prompt from the verified private repo, extend speech-derived cue generation using Rhubarb with a real WAV, implement editor and media tracking/mask states, obtain hosting eligibility without paid subscriptions, and validate all four original acceptance scenarios. No claim of full app completion is justified.
+
+## 2026-11-19 — QQQ/Performance/Repair current state
+
+- Starting remote revision `0d40a3de2747f27cd3a9d2912115a6212e51346c` verified before repair. The new work must be verified from the final remote commit separately before declaring Git delivery complete.
+- Actual UI application (Gradio) starts on localhost and served HTTP 200 in disposable Linux container; source+audio+user approved mouth sprite ZIP+manual cues produces an H.264/AAC MP4. No paid calls, model weights or third-party user media uploads.
+- Spoken-voice fixture (via `espeak`) plus manually authored cues proved compositing; Rhubarb CLI API adapter tested via fake executable, NOT real speech recognizer. Missing binary must fail closed.
+- Video camera/body/source preservation verified only on a synthetic moving-video input without a pre-existing speaking mouth. Real mouth masking/tracking and tablet UI remain unverified.
+- Source art hashes protected and checked. User's 1024x1536 portrait-style source dimensions can now be resized to fit output 480x720 without rewriting the source; the canonical original cannot be used for unapproved rig playback.
+- Measured single-container six-second, five-run median improvements against baseline: still 0.7932s -> 0.6324s (20.3%), video 1.0172s -> 0.6617s (34.9%). These are not guaranteed device/cloud improvements. See `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md`.
+- Remaining: real Rhubarb binary + true audio-derived cues, fully automatic video lip replacement, free hosted compute proof, actual Android UI testing, canonical Tiger rig authorization. FULL PRODUCT STATUS: **PARTIALLY VERIFIED**, not complete.

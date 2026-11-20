@@ -36,3 +36,7 @@ See `schemas/rig.schema.json`, `schemas/job.schema.json`, `examples/`. Files kep
 - Source image alone cannot yield a fully authoritative set of novel character mouth drawings. This requires explicit art authoring or subsequent user-approved visual references.
 - Exact talking-face model compatibility with free ZeroGPU and private-reference isolation is unverified.
 - A web browser does not guarantee MP4/H.264 encoding; use verified FFmpeg output on an eligible server, or provide a transparent fallback.
+
+## 2026-11-19 implementation note (supersedes unimplemented-module assumptions above)
+
+The repository now contains `app.py`, `src/dex_lips/{proof_render,speech,jobs}.py`, and `tests/test_speech_jobs.py`. Single-pass FFmpeg generates and muxes audio/video; raw frames are streamed. The proof engine retains 30-second/1280×720 output limits, downscales oversized portrait/landscape sources nondestructively, and uses manual anchor keyframes. The application is local-only by default and **does not** remove pre-existing moving mouths, perform neural face inpainting, or have independently verified real Rhubarb speech recognition. See `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md`.

@@ -15,3 +15,10 @@
 - The proof renderer explicitly refuses the canonical Tiger image and provisional reference in any mode; Tiger approval is a separate, human-controlled act. No synthetic cue test promotes artistic authority.
 - A $0/hour hardware price for Hugging Face CPU Basic does not prove free Gradio/Docker Space creation. Eligibility for free ZeroGPU must be checked for the live account before deployment. The local/browser and portable project path must not depend on a paid subscription.
 - Automatic speech analysis and video-mouth cleanup remain unproven. The existing synthetic proof uses externally provided cues and mouth-free base artwork only; no false full-contract PASS is allowed.
+
+## 2026-11-19 — QQQ reliability and performance repair
+
+- Implemented a runnable localhost-only deterministic Gradio editor and Rhubarb CLI bridge (real Rhubarb not yet available in verified test runtime). Do not treat UI presence as full automatic lip synchronization.
+- Added safe user-authored, user-authorized noncanonical mouth rig ZIP route while locking the original Tiger source hashes against unauthorized mouth rigs. No approved Tiger mouth sprites or tracking data exist.
+- Single-pass MP4 encode, cue index and bounded sprite cache improved measured isolated container medians for the 6-second benchmark; consult `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md` rather than repeating percentage claims without test context.
+- Preserve explicit partial/unverified states for actual Rhubarb phoneme analysis, free cloud deployment, video mouth removal, tablet runtime and canonical Tiger rig approval.

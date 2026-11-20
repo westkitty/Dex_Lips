@@ -1,0 +1,3 @@
+-r requirements-proof.txt
+# UI is optional; never install large dependencies on a constrained Mac by default.
+gradio>=6.0,<7.0

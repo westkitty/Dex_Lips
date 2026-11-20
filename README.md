@@ -1,47 +1,78 @@
 # Dex_Lips
 
-**Status: SOURCE-BACKED CODEX HANDOFF + VALIDATED SYNTHETIC RENDER PROOF — complete application NOT YET IMPLEMENTED.**
+**Status: locally verified deterministic lip-sync MVP, NOT a complete automatically recognizing or cloud-hosted product.**
 
-A reusable, strictly zero-out-of-pocket-cost lip-sync production studio for still images, existing videos, stylized art, and nonhuman fictional characters. The intended deliverable is a browser-accessible workflow that selects a neural human-face route only when genuinely free compute is available, and otherwise uses deterministic audio-to-mouth-cue animation with reusable character mouth rigs and manual controls.
+Dex_Lips takes a still image or existing video, a spoken audio recording and the character's separately authored mouth-sprite artwork. It applies reviewed Rhubarb-compatible mouth cues and creates an H.264/AAC MP4. It also includes an optional adapter for the real [Rhubarb Lip Sync](https://github.com/DanielSWolf/rhubarb-lip-sync) CLI: if that executable is installed, it can derive cues from actual speech. If missing, automatic recognition is BLOCKED, not replaced by pretend cues.
 
-## Start here
+## What currently works
 
-1. Read `OPERATIONAL_STATE.md`, `Dex_Lips_bible.md` and `docs/PRODUCT_SPEC.md`.
-2. Inspect `assets/references/SOURCE_MANIFEST.json` and `docs/CHARACTER_REFERENCE_POLICY.md` **before touching reference artwork**.
-3. Inspect `docs/SOURCE_REFERENCES.md`, `docs/CLOUD_DEPLOYMENT.md`, `docs/SECURITY_PRIVACY.md`.
-4. Run `python3 scripts/verify_seed.py` and `python3 -m unittest discover -s tests -v` (stdlib only).
-5. Review the executable proof scope and cloud correction below; give Codex the **complete prompt** in `prompts/CODEX_BUILD_PROMPT.md` (or use it directly as the handoff).
+- Gradio upload/edit/render interface, bound to `127.0.0.1` (not publicly shared) with actual MP4 output and receipt.
+- User-authorized mouth sprites (PNG) packaged as a ZIP, user-adjustable placement, editable cue JSON, moving-video keyframes.
+- Input integrity checks, canonical-source SHA-256 refusal, no overwrite of originals, per-job bounded scratch processing.
+- Portrait/landscape stills and videos downsampled to even H.264 dimensions within 1280×720; original source files are never edited.
+- Repeatable synthetic still and moving-video tests plus spoken-audio/manual-timing integration checks.
+- Bounded CPU and temporary disk, bounded cue counts, and optional real Rhubarb `--exportFormat json` integration; no neural weights, paid APIs, telemetry or cloud uploads.
 
-This seed contains a project contract, immutable source images, source hashes, schemas, QA fixtures, and operational instructions. It also contains a **tested synthetic cue-driven MP4 compositor** for still images and existing videos; run its proof suite below. It does **not** yet include audio-driven Rhubarb cue recognition, an editing UI, a deployed Space, a production tracking system, or approved Tiger mouth sprites. Rendering an MP4 from predefined cues does not prove automatic speech-to-lip synchronization.
+## What is not yet proven
 
-## Executable proof (lightweight, disposable runtime)
+- A genuine installed Rhubarb binary recognizing speech end to end on the target runtime (none installed in the last test container).
+- Fully automatic existing-video mouth removal and tracking, webcam capture, neural human-avatar models, offline-browser-only MP4, persistent cloud hosting, or Android tablet touch-runtime QA.
+- Any approved mouth art for Shard-God Tiger. Tiger's canonical reference is locked and cannot be used as a synthetic rig.
 
-This is an engineering checkpoint, **not** the complete app. Run in a temporary Linux container or a Codex cloud development environment with `ffmpeg`, `ffprobe`, and Pillow available. It does not install or download model weights and should not be run on a storage-constrained Mac without choosing to do so.
+## Run in a disposable, authorized Python environment
+
+Prerequisites: Python 3.11+, `ffmpeg` and `ffprobe` with H.264/AAC encoders, sufficient free temporary disk, and packages installed from `requirements-ui.txt`. This installs Gradio; **do not install on a storage-constrained MacBook or Big Mac by default**. Run in an available disposable machine or eligible free compute environment. No free hosted CPU Space is assumed.
 
 ```bash
-python3 -m pip install -r requirements-proof.txt
+python3 -m pip install -r requirements-ui.txt
+python3 scripts/verify_seed.py
+python3 -m unittest discover -s tests -v
+python3 app.py
+```
+
+Open `http://127.0.0.1:7860` on the **same** machine. The app binds only to localhost and does **not** create a public or remote URL. The synthetic self-test is available under its own tab; it is visibly not speech recognition.
+
+### Make your own mouth rig ZIP
+
+Supply separately drawn transparent sprites in one ZIP:
+
+```text
+mouth_rig.zip
+  X.png   (rest/closed)
+  A.png   (closed pressure)
+  B.png   (small opening)
+  C.png   (medium opening)
+  D.png   (wide opening)
+  E.png   (rounded)
+  F.png   (narrow rounded)
+  G.png   (optional)
+  H.png   (optional)
+```
+
+Rhubarb uses six core shapes A–F; X/G/H are optional to that algorithm, but **Dex_Lips currently requires X** for clean silence and at least one open shape. If you use the Rhubarb-generated cue route, provide every sprite actually referenced in the returned JSON. You can also include a `rig.json` with a shape-to-PNG map; it must be source-hash compatible. Never represent a user-approved generic rig as Starsilk canonical approval.
+
+Upload your source, voice recording and ZIP, confirm you own or have authority to use the mouth sprites, then either:
+
+1. Press **Analyze the actual audio** if Rhubarb is installed; review the generated cue JSON, or
+2. Paste real/hand-edited Rhubarb-style `mouthCues` JSON (`examples/mouthCues.example.json` shows the format).
+
+For moving footage add time-keyframed mouth anchors. The existing mouth must already be neutral/masked or it will appear beneath the overlay; the app blocks video export without acknowledgement. Press **Render verified MP4**, inspect the downloadable clip, and review the JSON receipt for exact limitations.
+
+## Proof commands
+
+```bash
+python3 scripts/verify_seed.py
 python3 -m unittest discover -s tests -v
 PYTHONPATH=src python3 scripts/proof_smoke.py
 ```
 
-The smoke command creates separate disposable clips for a synthetic still and a moving synthetic scene, then decodes and validates both outputs with FFmpeg. Use `--output-dir /path/to/empty/folder` to keep the synthetic test MP4s and JSON receipt. `proof_render.py` supports externally provided Rhubarb-compatible JSON cues only: **automatic voice-to-mouth recognition is NOT implemented**. All test media is generated synthetically; neither Tiger reference is used as input. When Pillow or FFmpeg is unavailable, the media test is SKIPPED rather than falsely passing.
+`proof_smoke.py` is an authored-cue compositor test using artificial tones, **not** a phonetic lip-sync test. The spoken-voice fixture in the suite uses actual `espeak` voice audio where available but manually defined mouth cues. The Rhubarb CLI adapter's fake binary test exercises wiring only, **not** recognition accuracy. Do not call automatic speech-to-mouth sync verified until a real Rhubarb binary and representative voice recording pass.
 
-Important deployment correction (official documentation reverified on 2026-11-19): ordinary Gradio and Docker *compute* Spaces now require a paid-plan entitlement to create, even though CPU Basic hardware is advertised at $0/hour. Free personal accounts in good standing may create up to two ZeroGPU Gradio Spaces, subject to provider eligibility and quota. Static Spaces are free but cannot execute Python/FFmpeg backend code. See `docs/CLOUD_DEPLOYMENT.md`.
+## Project authority and sources
 
-## Reference authority
+- Canonical primary: `assets/references/tiger_original_canonical.jpg`, exact SHA-256 locked in `assets/references/SOURCE_MANIFEST.json`.
+- **Not canon:** `assets/references/tiger_expressions_provisional.jpg`. It does not authorize elongated head geometry, pupils or human facial anatomy.
+- See `OPERATIONAL_STATE.md`, `Dex_Lips_bible.md`, `docs/ACCEPTANCE_TESTS.md`, `docs/QQQ_PERFORMANCE_REPAIR_2026-11-19.md`, and `docs/SOURCE_REFERENCES.md`.
+- Codex handoff: `prompts/CODEX_BUILD_PROMPT.md` is for finishing the remaining capabilities, not rebuilding the verified compositor.
 
-- `assets/references/tiger_original_canonical.jpg`: user's **controlling** Shard-God Tiger image reference; preserve exact head silhouette, pupil-less eyes, crystalline/faceted visual language, and user-locked 9 ft height.
-- `assets/references/tiger_expressions_provisional.jpg`: reference sheet supplied by user, titled *Provisional Visual Reference*. Its proportions/head geometry are NOT approved; use only as a noncanonical expression-label exploration unless explicitly promoted by user.
-- The expression sheet's upload name ended in `.png`, but the bytes are JPEG; this repo stores the unmodified bytes with the correct `.jpg` extension. Original upload name is recorded in the manifest.
-
-## No-spend, storage, and privacy boundaries
-
-- Default repo remains **private**. Do not publish source images, copy them to public demos, or use them for model training.
-- No paid inference, paid GPU rental, credit-based fallback, automatic purchase, or external spending. If free capacity is unavailable, stop or route to local/browser CPU work.
-- Do not install large model weights on MacBook or Big Mac. Cloud compute is ephemeral and must be eligibility-checked, not promised.
-- Do not put voice files, generated clips, secret keys, access tokens, credentials, or personal media into Git. `.gitignore` protects obvious folders, but review `git status` before each commit.
-- Google Colab managed runtimes are **not** a neural lip-sync fallback under their prohibited deepfake policy.
-
-## What is here
-
-See `docs/PRODUCT_SPEC.md`, `docs/ARCHITECTURE.md`, `docs/ACCEPTANCE_TESTS.md`, `docs/SOURCE_REFERENCES.md`, `docs/DRIVE_HANDOFF.md`, `schemas/`, and `examples/`. The build prompt is in `prompts/CODEX_BUILD_PROMPT.md`.
+**Cost:** $0 for code/runtime in the disposable test environment, with no paid calls. Free production cloud hosting is **not** promised. Hugging Face now requires paid-plan access for ordinary new Gradio/Docker compute Spaces; free ZeroGPU creation is conditional. GitHub is private and code contains no user-uploaded working media.
