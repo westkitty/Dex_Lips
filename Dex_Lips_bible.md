@@ -32,3 +32,8 @@
 
 - Draft generator gained conservative source-contour modes that trace a connected dark/light mouth shape inside a user-designated region and warp the actual asymmetrical silhouette and source colors. Explicit graphic presets remain for artwork without an isolatable mouth. Fail-closed contour extraction prevents silently inventing anatomy; diagnostic trace and open pose are review surfaces, not identity-certification tools.
 - Current constraints: mouth placement/ROI still needs user input, outputs are visually proposed poses (not a jaw-rig or occlusion solution), Tiger canonical approved art still cannot be auto-created, and existing audio/media rendering route is preserved. PR #1 must stay unmerged until full-suite CI and generated-rig MP4 readback pass.
+
+## 2026-11-20 — Verified source mouth-generation pipeline
+
+- GitHub Actions run 44728641740 on commit d26f921b1aeb43978d43292c35576697f5a9d64f passed 30 Python tests, original source hashes, Gradio construction, existing MP4 compositor smoke, and actual UI callback sequence using generated mouth art, spoken WAV/archived authentic Rhubarb cues, and decodable H.264/AAC MP4. This is a verifiable software workflow, not artistic identity certification.
+- Retain explicit generated-draft visual review, original-source/canonical SHA protection, and the former graphic/import routes. Do not claim the tested rig removes moving mouth video or independently learns new phonemes.
