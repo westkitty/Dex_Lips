@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10171e">
+  <meta name="description" content="Dex_Lips: make, inspect and export nine editable character mouth sprites without uploading artwork.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; media-src blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Dex_Lips — Mouth Rig Lab</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <script src="./assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to editor</a>
+  <header class="masthead shell">
+    <div class="brand" aria-label="Dex Lips"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span>DEX<span class="slash">//</span>LIPS</span><span class="brand-sub">RIG LAB</span></div>
+    <div class="privacy"><span class="live-dot"></span> LOCAL IN YOUR BROWSER <span class="privacy-extra">· NO UPLOAD</span></div>
+  </header>
+  <main id="main" class="shell">
+    <section class="intro" aria-labelledby="hero-title">
+      <div><div class="eyebrow">IMAGE → MOUTH RIG</div><h1 id="hero-title">Keep the character.<br><em>Move the mouth.</em></h1><p>Build a nine-pose mouth set from the artwork you already have. Source tracing works with dark, bright, angular and stylized mouths. You choose the region; the tool preserves pixels from that region, not an invented face.</p></div>
+      <div class="intro-meta"><span class="index">01 / 03</span><strong>NO MODEL DOWNLOADS</strong><span>Editable PNGs · portable ZIP · exact source hash</span></div>
+    </section>
+    <div class="studio">
+      <section class="panel controls" aria-label="Rig settings">
+        <div class="section-title"><span class="step">01</span><h2>Source &amp; geometry</h2></div>
+        <label class="drop" id="fileDrop" for="sourceInput"><span class="drop-icon" aria-hidden="true">↗</span><strong id="fileLabel">Choose a character image or video</strong><small>PNG · JPEG · WEBP · MP4 · WEBM · up to 40 MB</small><input id="sourceInput" type="file" accept="image/png,image/jpeg,image/webp,video/mp4,video/webm,video/quicktime,.mov" /></label>
+        <div id="videoTools" class="video-tools" hidden><label for="videoInput">Choose a reference frame</label><video id="videoInput" preload="metadata" controls playsinline muted aria-label="Video source frame selection"></video><button id="captureVideo" type="button" class="secondary">Use current video frame</button><p class="hint">Source-traced sprites use this one frame. Existing video mouth motion is not removed or tracked.</p></div>
+        <div class="form-grid">
+          <div class="field full"><label for="mode">Mouth construction</label><select id="mode"><option value="source-faceted">Trace source · faceted</option><option value="source-soft">Trace source · soft</option><option value="faceted">Graphic · faceted</option><option value="soft">Graphic · soft</option></select></div>
+          <div class="field"><label for="contrast">Mouth contrast</label><select id="contrast"><option value="auto">Auto</option><option value="dark">Dark on light</option><option value="light">Light on dark</option></select></div>
+          <div class="field"><label for="mouthW">Region width <output id="mouthWValue" for="mouthW">13%</output></label><input id="mouthW" type="range" min="2" max="35" value="13" step="0.5"></div>
+          <div class="field"><label for="mouthH">Region height <output id="mouthHValue" for="mouthH">6.5%</output></label><input id="mouthH" type="range" min="1.5" max="25" value="6.5" step="0.5"></div>
+          <div class="field"><label for="mouthX">Horizontal <output id="mouthXValue" for="mouthX">50%</output></label><input id="mouthX" type="range" min="3" max="97" value="50" step="0.5"></div>
+          <div class="field"><label for="mouthY">Vertical <output id="mouthYValue" for="mouthY">60%</output></label><input id="mouthY" type="range" min="3" max="97" value="60" step="0.5"></div>
+        </div>
+        <p class="hint">Tap the artwork to place the mouth region. Arrow keys adjust its position while the image is focused.</p>
+        <button type="button" id="generate" class="primary" disabled>Generate nine draft poses <span aria-hidden="true">↗</span></button>
+        <div id="message" class="message" role="status" aria-live="polite">Choose a character source to begin.</div>
+      </section>
+      <section class="panel stage" aria-label="Artwork and trace preview">
+        <div class="section-title"><span class="step">02</span><h2>Inspect the source</h2><span class="stage-hint">CLICK TO POSITION</span></div>
+        <div class="canvas-frame"><canvas id="stageCanvas" width="640" height="420" tabindex="0" role="img" aria-label="Artwork region preview. Use arrow keys to reposition the mouth."></canvas><div id="emptyState" class="empty-state"><span class="empty-orbit" aria-hidden="true"><span></span></span><strong>Artwork enters here</strong><small>Pixels remain on your device.</small></div></div>
+        <div class="readouts"><div><span>ORIGINAL SIZE</span><strong id="originalSize">—</strong></div><div><span>SOURCE SHA-256</span><strong id="hashPreview">—</strong></div><div><span>TRACE STATE</span><strong id="traceState">NOT GENERATED</strong></div></div>
+        <div class="trace-review" id="traceReview" hidden><div class="trace-topline"><strong>What was extracted</strong><span id="traceScore">—</span></div><canvas id="traceCanvas" width="200" height="120" role="img" aria-label="Detected mouth region highlighted in cyan"></canvas><p>Only the highlighted region becomes the source-derived mouth overlay. Check for eye or face fragments before approving.</p></div>
+      </section>
+      <section class="panel result" aria-label="Generated mouth assets">
+        <div class="section-title"><span class="step">03</span><h2>Review &amp; export</h2></div>
+        <div id="poseRail" class="pose-rail" role="group" aria-label="Choose a mouth pose"></div>
+        <div class="pose-display"><div class="pose-inset"><canvas id="poseCanvas" width="240" height="150" role="img" aria-label="Selected mouth sprite on transparent background"></canvas><span class="small-label" id="poseLabel">D / OPEN</span></div><div class="pose-note"><strong id="poseTitle">No mouth rig yet</strong><p id="poseDescription">Generate a draft to inspect every sprite individually.</p></div></div>
+        <div class="cue-section"><label for="audioInput">Optional audio + authored cue preview</label><input id="audioInput" type="file" accept="audio/*" aria-describedby="audioHelp"><audio id="speechPlayer" controls preload="none"></audio><label for="cueInput">Rhubarb-compatible cue JSON</label><textarea id="cueInput" spellcheck="false" placeholder='{"mouthCues":[{"start":0,"end":0.4,"value":"X"},{"start":0.4,"end":0.8,"value":"D"}]}' rows="3"></textarea><button type="button" id="applyCues" class="secondary">Validate cue timing for preview</button><p class="hint" id="audioHelp">Audio follows supplied mouth cues. This page does not derive phonemes or export MP4.</p></div>
+        <label class="review-check"><input type="checkbox" id="reviewed"><span>I inspected the nine poses and authorize this <strong>noncanonical, job-specific draft</strong>. This is not a character canon approval.</span></label>
+        <div class="export-row"><button type="button" id="downloadZip" class="primary" disabled>Download rig ZIP <span aria-hidden="true">↧</span></button><button type="button" id="downloadPng" class="secondary" disabled>Selected PNG</button></div>
+        <div class="export-meta">Nine separate transparent PNGs · unapproved rig.json · original source SHA-256</div>
+      </section>
+    </div>
+    <section class="capabilities" aria-labelledby="scope-title"><div><div class="eyebrow">PRODUCTION BOUNDARIES</div><h2 id="scope-title">What runs here, and what doesn't</h2></div><div class="scope-grid"><div><span class="scope-dot positive"></span><strong>Runs in this page</strong><p>Source crop selection, conservative mouth-pixel tracing, nine transparent sprites, optional cue playback, downloadable ZIP.</p></div><div><span class="scope-dot negative"></span><strong>Requires the full studio</strong><p>Rhubarb speech recognition, frame tracking, mouth cleanup and verified H.264/AAC MP4 export use the separate Python/FFmpeg workflow.</p></div><div><span class="scope-dot negative"></span><strong>Never automatic</strong><p>Canonical visual approval. The bundled protected character references are hash-locked and cannot become draft rigs here.</p></div></div></section>
+    <footer class="site-footer"><span>DEX//LIPS · PRIVATE ARTWORK STAYS LOCAL</span><a href="https://github.com/westkitty/Dex_Lips" target="_blank" rel="noopener noreferrer">Code &amp; full studio instructions <span aria-hidden="true">↗</span></a></footer>
+  </main>
+</body>
+</html>
