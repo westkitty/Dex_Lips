@@ -1,0 +1,82 @@
+name: Dex_Lips Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'site-tests/**'
+      - '.github/workflows/dex-lips-pages.yml'
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'site-tests/**'
+      - '.github/workflows/dex-lips-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dex-lips-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install disposable browser-test dependencies
+        run: |
+          python -m pip install 'Pillow>=10,<13' 'playwright==1.58.0'
+          python -m playwright install --with-deps chromium
+      - name: Compile page behavior and test harness
+        run: |
+          node --check site/assets/app.js
+          python -m compileall -q site-tests
+      - name: Real browser image-to-rig ZIP test
+        run: |
+          python site-tests/test_pages.py
+      - name: Reject accidentally published media, secrets or backend
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          allowed={'.html','.css','.js','.txt','.svg','.ico'}
+          for p in Path('site').rglob('*'):
+              if p.is_file():
+                  assert p.suffix in allowed, f'Unexpected public asset: {p}'
+                  assert p.stat().st_size < 150_000, f'Oversized static asset: {p}'
+          print('Static-only public artifact confirmed')
+          PY
+
+  publish:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: browser-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload only the public static studio
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './site'
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
