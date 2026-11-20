@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "character_id": "generic-muzzle-template-not-a-character",
+  "authority": "synthetic_demo",
+  "approved": true,
+  "mouth_anchor": {
+    "x": 0.5,
+    "y": 0.6,
+    "scale": 1.0,
+    "rotation_deg": 0
+  },
+  "anchor_note": "Sprites are top-anchored: place the anchor so the top-centre (philtrum) sits just under the nose.",
+  "shapes": {
+    "X": "X.png",
+    "A": "A.png",
+    "B": "B.png",
+    "C": "C.png",
+    "D": "D.png",
+    "E": "E.png",
+    "F": "F.png",
+    "G": "G.png",
+    "H": "H.png"
+  },
+  "descriptions": {
+    "X": "rest: closed muzzle line",
+    "A": "closed, lips pressed (P B M)",
+    "B": "slightly open, teeth nearly together (most consonants, EE)",
+    "C": "open, lower jaw dropped, tongue low (EH AE)",
+    "D": "wide open, canines and tongue visible (AA)",
+    "E": "slightly rounded opening (AO ER)",
+    "F": "puckered small round opening (OO OW W)",
+    "G": "upper teeth resting on lower lip (F V)",
+    "H": "open with tongue tip raised (L)"
+  },
+  "notes": "Procedurally drawn generic muzzle template. Not derived from, and not a likeness of, any specific character (including Dexter or Tiger). Reviewed draft, not canon."
+}

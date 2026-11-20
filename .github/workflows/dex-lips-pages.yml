@@ -38,6 +38,7 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Compile page behavior and test harness
         run: |
+          node --check site/assets/trace_core.js
           node --check site/assets/app.js
           python -m compileall -q site-tests
       - name: Real browser image-to-rig ZIP test

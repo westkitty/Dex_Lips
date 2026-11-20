@@ -8,6 +8,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; media-src blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>Dex_Lips — Mouth Rig Lab</title>
   <link rel="stylesheet" href="./assets/style.css">
+  <script src="./assets/trace_core.js" defer></script>
   <script src="./assets/app.js" defer></script>
 </head>
 <body>
@@ -28,6 +29,7 @@
         <div id="videoTools" class="video-tools" hidden><label for="videoInput">Choose a reference frame</label><video id="videoInput" preload="metadata" controls playsinline muted aria-label="Video source frame selection"></video><button id="captureVideo" type="button" class="secondary">Use current video frame</button><p class="hint">Source-traced sprites use this one frame. Existing video mouth motion is not removed or tracked.</p></div>
         <div class="form-grid">
           <div class="field full"><label for="mode">Mouth construction</label><select id="mode"><option value="source-faceted">Trace source · faceted</option><option value="source-soft">Trace source · soft</option><option value="faceted">Graphic · faceted</option><option value="soft">Graphic · soft</option></select></div>
+          <div class="field"><label for="jaw">Jaw / construction mode</label><select id="jaw"><option value="human">Human-like (centred)</option><option value="muzzle">Muzzle (lower jaw drops)</option><option value="beak">Beak (wedge opening)</option><option value="wide-jaw">Wide jaw</option></select></div>
           <div class="field"><label for="contrast">Mouth contrast</label><select id="contrast"><option value="auto">Auto</option><option value="dark">Dark on light</option><option value="light">Light on dark</option></select></div>
           <div class="field"><label for="mouthW">Region width <output id="mouthWValue" for="mouthW">13%</output></label><input id="mouthW" type="range" min="2" max="35" value="13" step="0.5"></div>
           <div class="field"><label for="mouthH">Region height <output id="mouthHValue" for="mouthH">6.5%</output></label><input id="mouthH" type="range" min="1.5" max="25" value="6.5" step="0.5"></div>
