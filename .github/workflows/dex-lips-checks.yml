@@ -1,0 +1,61 @@
+name: Dex_Lips source-mouth and MP4 validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/dex-lips-checks.yml'
+      - 'app.py'
+      - 'src/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - 'schemas/**'
+      - 'requirements*.txt'
+      - 'assets/references/**'
+      - 'experiments/browser-wasm/fixtures/**'
+      - 'experiments/browser-wasm/evidence/actual_rhubarb_mouthCues.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mp4-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check system render prerequisites
+        run: |
+          command -v ffmpeg
+          command -v ffprobe
+          ffmpeg -hide_banner -encoders | grep -q libx264
+          ffmpeg -hide_banner -encoders | grep -q aac
+      - name: Install limited runtime dependencies
+        run: |
+          python -m pip install -r requirements-ui.txt
+      - name: Verify immutable bundled reference images
+        run: |
+          python scripts/verify_seed.py
+      - name: Compile Python source
+        run: |
+          python -m compileall -q app.py src tests scripts
+      - name: Run entire Python unit and media integration suite
+        run: |
+          python -m unittest discover -s tests -v
+      - name: Existing still and moving video compositor regression
+        run: |
+          PYTHONPATH=src python scripts/proof_smoke.py
+      - name: Ensure Gradio studio constructs without relying on external hosting
+        run: |
+          python - <<'PY'
+          import app
+          studio = app.build()
+          assert studio is not None
+          print('Gradio Blocks constructed with source tracing and existing rendering')
+          PY
