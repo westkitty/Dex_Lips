@@ -9,9 +9,9 @@ class TestSeed(unittest.TestCase):
   for name in ['rig','job']:
    data=json.loads((ROOT/f'schemas/{name}.schema.json').read_text())
    self.assertIn('$schema',data)
- def test_no_claim_of_completed_product(self):
-  state=(ROOT/'OPERATIONAL_STATE.md').read_text()
-  self.assertIn('NOT BUILT',state)
+ def test_manifest_authority_order(self):
+  m=json.loads((ROOT/'assets/references/SOURCE_MANIFEST.json').read_text())
+  self.assertEqual([a['role'] for a in m['assets']], ['CANONICAL_PRIMARY', 'PROVISIONAL_NOT_CANON'])
  def test_no_approved_tiger_rig(self):
   rig=json.loads((ROOT/'examples/tiger_rig.unapproved.json').read_text())
   self.assertFalse(rig['approved'])

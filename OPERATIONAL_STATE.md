@@ -39,3 +39,11 @@ Execute the bounded contract `prompts/CODEX_BUILD_PROMPT.md` from the verified r
 - An uncapped hosted task can exceed free quota or be billed.
 - A generic front-facing face detector may fail for 3/4 profile and monstrous mouths; require manual keyframe anchors and explicit failure states.
 - Claims of automatic animal speech from one still image are unverified without a user-approved mouth rig.
+
+## 2026-11-19 — Bounded reliability audit and compositor proof
+
+- **Confirmed in an isolated container:** seed source hashes unchanged; Python stdlib seed checks; JSON schemas and examples separately checked using jsonschema; Pillow/FFmpeg/ffprobe available in isolated runtime. `scripts/proof_smoke.py` renders separate synthetic image + cues and moving synthetic video + cues to decodable 2s, 24fps, H.264/AAC MP4 files. Audio/video durations match in this narrow test.
+- **Scope only:** cue-driven compositing was tested, not Rhubarb speech recognition, nonhuman mouth tracking, UI, free cloud hosting, or Tiger mouth approval. Synthetic test sources are not canonical art.
+- **Confirmed specification correction:** ordinary Gradio/Docker compute Spaces require paid plan for new creation; eligible free ZeroGPU Spaces are the exception. Do not create paid hosted compute; static frontend is a separate, non-backend fallback.
+- **Regression protection:** the proof renderer rejects bundled Tiger reference hashes even when an untrusted rig JSON lies about authority; renders refuse output overwrite; synthetic tests and manifest locks must remain intact.
+- **Remaining next step:** execute the build prompt from the verified private repo, extend speech-derived cue generation using Rhubarb with a real WAV, implement editor and media tracking/mask states, obtain hosting eligibility without paid subscriptions, and validate all four original acceptance scenarios. No claim of full app completion is justified.

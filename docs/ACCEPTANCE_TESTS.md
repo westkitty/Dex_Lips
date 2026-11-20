@@ -16,7 +16,9 @@
 | T3 | Nonhuman still + user-approved mouth art | Source anatomy/head/eyes unchanged; cue-driven mouth movement; MP4 | Human lips, changed head, unauthorized canon promotion |
 | T4 | Moving nonhuman video + mouth rig | Keyframed/trackable mouth anchor stays aligned through turns; MP4 | Drifting or detached mouth; unbounded manual fix concealed |
 
-For complete release, all four must actually pass with evidence. For MVP, the fully deterministic T3 (using a distinct **synthetic demo** rig, not Tiger canon) and T4 are minimum functional checkpoints; T1/T2 may remain `UNAVAILABLE_FREE_NEURAL` until evidence-backed hosted adapter works. Never mark the full contract PASS under that limitation.
+For complete release, all four must actually pass with evidence. For MVP, T3 (using a distinct **synthetic demo** rig, not Tiger canon) and T4 are minimum functional checkpoints **with mouth cues genuinely derived from the supplied speech**. T1/T2 may remain `UNAVAILABLE_FREE_NEURAL` until evidence-backed hosted adapters work. Never mark the full contract PASS under that limitation.
+
+**Proof-level distinction:** `scripts/proof_smoke.py` does *not* pass T3/T4 end-to-end because it feeds **authored cue JSON and artificial tone audio** to a compositor. It proves MP4 frame rendering, moving manual mouth anchors and audio mux, not speech recognition, viseme accuracy, production tracking, occlusion repair or a user-facing app. Treat these as `COMPOSITOR_PASS / FULL_SCENARIO_UNVERIFIED` until Codex adds a real Rhubarb speech-derived cue test and visual validation.
 
 ## Technical acceptance per rendered clip
 

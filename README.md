@@ -1,6 +1,6 @@
 # Dex_Lips
 
-**Status: SOURCE-BACKED CODEX HANDOFF SEED — application NOT YET IMPLEMENTED.**
+**Status: SOURCE-BACKED CODEX HANDOFF + VALIDATED SYNTHETIC RENDER PROOF — complete application NOT YET IMPLEMENTED.**
 
 A reusable, strictly zero-out-of-pocket-cost lip-sync production studio for still images, existing videos, stylized art, and nonhuman fictional characters. The intended deliverable is a browser-accessible workflow that selects a neural human-face route only when genuinely free compute is available, and otherwise uses deterministic audio-to-mouth-cue animation with reusable character mouth rigs and manual controls.
 
@@ -10,9 +10,23 @@ A reusable, strictly zero-out-of-pocket-cost lip-sync production studio for stil
 2. Inspect `assets/references/SOURCE_MANIFEST.json` and `docs/CHARACTER_REFERENCE_POLICY.md` **before touching reference artwork**.
 3. Inspect `docs/SOURCE_REFERENCES.md`, `docs/CLOUD_DEPLOYMENT.md`, `docs/SECURITY_PRIVACY.md`.
 4. Run `python3 scripts/verify_seed.py` and `python3 -m unittest discover -s tests -v` (stdlib only).
-5. Give Codex the **complete prompt** in `prompts/CODEX_BUILD_PROMPT.md` (or use it directly as the handoff).
+5. Review the executable proof scope and cloud correction below; give Codex the **complete prompt** in `prompts/CODEX_BUILD_PROMPT.md` (or use it directly as the handoff).
 
-This seed contains a project contract, immutable source images, source hashes, schemas, QA fixtures, and operational instructions. It does **not** pretend to contain a finished lip-sync engine, a deployed Space, paid-service access, approved mouth sprite assets, or completed rendering tests.
+This seed contains a project contract, immutable source images, source hashes, schemas, QA fixtures, and operational instructions. It also contains a **tested synthetic cue-driven MP4 compositor** for still images and existing videos; run its proof suite below. It does **not** yet include audio-driven Rhubarb cue recognition, an editing UI, a deployed Space, a production tracking system, or approved Tiger mouth sprites. Rendering an MP4 from predefined cues does not prove automatic speech-to-lip synchronization.
+
+## Executable proof (lightweight, disposable runtime)
+
+This is an engineering checkpoint, **not** the complete app. Run in a temporary Linux container or a Codex cloud development environment with `ffmpeg`, `ffprobe`, and Pillow available. It does not install or download model weights and should not be run on a storage-constrained Mac without choosing to do so.
+
+```bash
+python3 -m pip install -r requirements-proof.txt
+python3 -m unittest discover -s tests -v
+PYTHONPATH=src python3 scripts/proof_smoke.py
+```
+
+The smoke command creates separate disposable clips for a synthetic still and a moving synthetic scene, then decodes and validates both outputs with FFmpeg. Use `--output-dir /path/to/empty/folder` to keep the synthetic test MP4s and JSON receipt. `proof_render.py` supports externally provided Rhubarb-compatible JSON cues only: **automatic voice-to-mouth recognition is NOT implemented**. All test media is generated synthetically; neither Tiger reference is used as input. When Pillow or FFmpeg is unavailable, the media test is SKIPPED rather than falsely passing.
+
+Important deployment correction (official documentation reverified on 2026-11-19): ordinary Gradio and Docker *compute* Spaces now require a paid-plan entitlement to create, even though CPU Basic hardware is advertised at $0/hour. Free personal accounts in good standing may create up to two ZeroGPU Gradio Spaces, subject to provider eligibility and quota. Static Spaces are free but cannot execute Python/FFmpeg backend code. See `docs/CLOUD_DEPLOYMENT.md`.
 
 ## Reference authority
 

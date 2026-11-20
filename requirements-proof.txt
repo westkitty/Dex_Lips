@@ -1,0 +1,2 @@
+# Proof compositor, not full application dependencies. FFT/ML not installed.
+Pillow>=10.0,<13.0
