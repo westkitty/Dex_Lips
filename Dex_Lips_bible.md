@@ -37,3 +37,9 @@
 
 - GitHub Actions run 44728641740 on commit d26f921b1aeb43978d43292c35576697f5a9d64f passed 30 Python tests, original source hashes, Gradio construction, existing MP4 compositor smoke, and actual UI callback sequence using generated mouth art, spoken WAV/archived authentic Rhubarb cues, and decodable H.264/AAC MP4. This is a verifiable software workflow, not artistic identity certification.
 - Retain explicit generated-draft visual review, original-source/canonical SHA protection, and the former graphic/import routes. Do not claim the tested rig removes moving mouth video or independently learns new phonemes.
+
+## 2026-11-20 — Pages release checkpoint
+
+- User-authorized GitHub Pages publication completed by merge of PR #2 and GitHub Actions deploy receipt run 44731970189 (site: https://westkitty.github.io/Dex_Lips/). A browser-local static rig lab is published from `site/`, without source artwork uploads or canonical references in the Pages artifact. The verified Python studio remains the separate MP4 export path.
+- A GitHub-hosted Playwright regression verified nonhuman source tracing and separate transparent PNG/ZIP delivery (source hashing, approval gates, blank-source fail-closed, light/dark source, mobile viewport). The deploy receipt reports success; live HTTP and Android touch interaction were not verified by this session.
+- Original repository visibility is public, despite older source documents describing it as private. Preserve the distinction between draft mouth generation and verified canonical character approval.
