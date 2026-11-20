@@ -1,6 +1,6 @@
 # Operational State — Dex_Lips
 
-Updated: 2026-11-19 (America/Detroit)
+Updated: 2026-11-20 (America/Detroit)
 
 ## Controlling user objective
 
@@ -8,7 +8,7 @@ Create a reusable $0 lip-sync studio for user-supplied stills/videos and recorde
 
 ## Known-good seed invariants
 
-- Private repository intended: `westkitty/Dex_Lips` (remote creation status must be independently verified).
+- Repository: `westkitty/Dex_Lips`, visibility PUBLIC (verified 2026-11-20; earlier "private" wording is obsolete).
 - Source images remain byte-for-byte identical to uploads and are checked by `scripts/verify_seed.py`.
 - Canonical Tiger reference is the ORIGINAL full-body image; expression sheet is PROVISIONAL, not an approved replacement.
 - Tiger: original head shape, eyes with no pupils, approximately 9 ft / 2.74 m scale, faceted obsidian and cyan crystalline structure; do not anthropomorphize or give human lips.
@@ -18,9 +18,11 @@ Create a reusable $0 lip-sync studio for user-supplied stills/videos and recorde
 
 - Source-reference packaging and validation: completed locally (run verifier again after cloning).
 - Gradio editor: IMPLEMENTED, local HTTP startup and backend render verified; Android touch interactions unverified.
-- Rhubarb CLI integration: IMPLEMENTED and stub-adapter tested; REAL EXECUTABLE MISSING in tested runtime; phonetic recognition UNVERIFIED.
+- Rhubarb CLI integration: VERIFIED end to end with the real Rhubarb 1.14.0 Linux release on real LibriSpeech speech (2026-11-20); CI installs the pinned release. Accuracy on the 8-clip set is in ACCURACY.md.
+- Second engine (wav2vec2 phoneme CTC): IMPLEMENTED and VERIFIED on real speech locally; model download is explicit and optional; CI keeps it opt-in.
 - Still-image user-approved mouth rig + manual cue render: VERIFIED in isolated runtime; exact phonetic lip-sync depends on real Rhubarb.
-- Existing-video keyframed overlay: VERIFIED synthetic clip only; automatic tracking/removal NOT BUILT.
+- Existing-video keyframed overlay: VERIFIED synthetic clip only; opt-in mouth cover (patch / OpenCV inpaint) follows the anchor; automatic tracking NOT BUILT.
+- Phone video intake (VFR / 29.97 fps → CFR working copy, trim/pad length choice): IMPLEMENTED and tested on synthetic 29.97 fps clips.
 - MuseTalk/SadTalker hosted adapters: NOT BUILT / CONDITIONAL.
 - Browser WebAssembly fallback: UNVERIFIED; never promise.
 - Audio/video H.264/AAC MP4 export: VERIFIED on synthetic media and manually aligned spoken audio in isolated container; no actual target-machine proof.
@@ -46,7 +48,7 @@ Execute the bounded contract `prompts/CODEX_BUILD_PROMPT.md` from the verified r
 - **Scope only:** cue-driven compositing was tested, not Rhubarb speech recognition, nonhuman mouth tracking, UI, free cloud hosting, or Tiger mouth approval. Synthetic test sources are not canonical art.
 - **Confirmed specification correction:** ordinary Gradio/Docker compute Spaces require paid plan for new creation; eligible free ZeroGPU Spaces are the exception. Do not create paid hosted compute; static frontend is a separate, non-backend fallback.
 - **Regression protection:** the proof renderer rejects bundled Tiger reference hashes even when an untrusted rig JSON lies about authority; renders refuse output overwrite; synthetic tests and manifest locks must remain intact.
-- **Remaining next step:** execute the build prompt from the verified private repo, extend speech-derived cue generation using Rhubarb with a real WAV, implement editor and media tracking/mask states, obtain hosting eligibility without paid subscriptions, and validate all four original acceptance scenarios. No claim of full app completion is justified.
+- **Remaining next step:** (superseded 2026-11-20: real Rhubarb and a second engine now run on real speech; see ACCURACY.md) execute the build prompt from the verified repo, implement editor and media tracking/mask states, obtain hosting eligibility without paid subscriptions, and validate all four original acceptance scenarios. No claim of full app completion is justified.
 
 ## 2026-11-19 — QQQ/Performance/Repair current state
 
@@ -94,3 +96,11 @@ Execute the bounded contract `prompts/CODEX_BUILD_PROMPT.md` from the verified r
 - The original Python/Gradio/FFmpeg backend remains unchanged. Pages is static only; no claim of automatic speech analysis or MP4 export on Pages. Repository visibility observed PUBLIC (contradicts older 'private repo' wording).
 - PR #2 merged; `main` commit `c2d8d7253143fd2afe9847843ebc7b04abf65129`. Source/test browser QA passed GitHub run 44731510532. Follow-up workflow-only timing fix committed as `c43c2c541d021b8ebcefee6575bc57438fad7ca0` after transient Pages artifact indexing/duplicate artifact failures. Fresh GitHub [run 44731970189](https://github.com/westkitty/Dex_Lips/actions/runs/44731970189) passed browser-check and publish; deploy-pages reported success and environment URL https://westkitty.github.io/Dex_Lips/.
 - Production **deployment receipt VERIFIED**; separate HTTP navigation/Android end-user proof **UNVERIFIED**, because external page fetch was unavailable in the current tools. Canonical character-specific visual quality and in-browser speech-to-MP4 remain unverified/unsupported. No unrelated project files or references mutated.
+
+## 2026-11-20 — engines, accuracy, muzzle set, ten studio improvements (branch `feat/real-engines-accuracy-muzzle`)
+
+- Real Rhubarb 1.14.0 and a wav2vec2 phoneme recognizer both produce cues from real audio; BLOCKED path kept and tested.
+- `make accuracy` reproduces ACCURACY.md from 8 LibriSpeech clips with reviewer-judgment references (not ground truth).
+- Generic procedural muzzle mouth set shipped; Dexter set waiting for the approved reference sheet to be placed in the repo.
+- Studio: click placement, waveform + cue-table timing editor, phone-video CFR + trim/pad, opt-in mouth cover, 2-second preview, crossfade, jaw modes (muzzle/beak/wide jaw), Python/browser tracing parity test, START_HERE.md.
+- Fixed: renderer dropped the final video frame when audio ended a few ms before it (e.g. FLAC input); audio is now padded.

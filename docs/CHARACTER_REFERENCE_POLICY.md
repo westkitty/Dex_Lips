@@ -22,3 +22,11 @@
 - Allow manual placement with anchors relative to the original head. Keep edits transformable/reversible; no destructive painting into original image.
 - For nonhuman profiles generally, mouth pose semantics map to visible articulation, not human anatomy.
 - `assets/references/SOURCE_MANIFEST.json` holds file hashes; verify before and after development and distribution.
+
+## Public-repository note (2026-11-20)
+
+The repository is PUBLIC. These Tiger references were added when it was meant to be private; whether they stay is an owner decision (docs/RIGHTS.md). The SHA-256 rig-generation lock is unchanged.
+
+## Dexter
+
+Dexter mouth art may be cut and edited only from the owner-approved Dexter reference sheet (approved 2026-11-20; not yet imported, see assets/mouth_sets/README.md). Never invent or approximate Dexter's likeness; the generic muzzle template is deliberately not Dexter.

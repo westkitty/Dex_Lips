@@ -9,7 +9,7 @@ Verified research starting points (visited in conversation on **2026-11-19 Ameri
 5. **Gradio** — official guide: https://www.gradio.app/guides/quickstart  — web application UI option. Verify current minimum Python and framework versions.
 6. **FFmpeg** — official: https://ffmpeg.org/documentation.html  — encode, remux, and examine MP4 output; pin version/installation method in actual runtime.
 7. **Colab managed runtimes** — official FAQ: https://research.google.com/colaboratory/faq.html  — explicitly prohibits creating deepfakes. Do not use as a workaround for this lip-sync project.
-8. **GitHub `gh` CLI** — official: https://cli.github.com/manual/gh_repo_create  — create a private repository; verify authenticated owner/visibility before operations.
+8. **GitHub `gh` CLI** — official: https://cli.github.com/manual/gh_repo_create  — create a repository; verify authenticated owner/visibility before operations.
 9. **Google Drive API scope** — official: https://developers.google.com/workspace/drive/api/guides/api-specific-auth  — `drive.file` preferred over broad access; production Drive automation requires explicit user authorization.
 
 ## User-provided visual assets
@@ -17,6 +17,9 @@ Verified research starting points (visited in conversation on **2026-11-19 Ameri
 - `assets/references/tiger_original_canonical.jpg` (source original `1000233378.jpg`) — user-designated PRIMARY; SHA-256 recorded in `SOURCE_MANIFEST.json`.
 - `assets/references/tiger_expressions_provisional.jpg` (uploaded as `1000233387.png` but contains JPEG bytes) — user-provided PROVISIONAL; SHA-256 recorded.
 
-No consent or license to publish those images **publicly** is inferred. Private repo/Drive source inclusion is part of the current requested handoff. The character profile and artwork are not distributed as open-source media.
+No consent or license to publish those images **publicly** is inferred. The repository is now PUBLIC (verified 2026-11-20), so their continued presence here is an open owner decision (see docs/RIGHTS.md). The character profile and artwork are not distributed as open-source media.
 
 10. **Synthetic rendering proof source** — this repository's `src/dex_lips/proof_render.py`, `scripts/proof_smoke.py`, and `tests/test_proof_renderer.py`, verified in a disposable Python 3 / Pillow / FFmpeg environment 2026-11-19. This is original project code, not upstream Rhubarb audio recognition or final app implementation.
+11. **Rhubarb Lip Sync 1.14.0** — https://github.com/DanielSWolf/rhubarb-lip-sync/releases/tag/v1.14.0 (MIT). Mouth-shape semantics used for the phoneme table: https://github.com/DanielSWolf/rhubarb-lip-sync#mouth-shapes
+12. **wav2vec2 phoneme model** — https://huggingface.co/facebook/wav2vec2-lv-60-espeak-cv-ft (Apache-2.0), revision `ae45363bf3413b374fecd9dc8bc1df0e24c3b7f4`. Xu, Baevski, Auli, *Simple and Effective Zero-shot Cross-lingual Phoneme Recognition* (2021).
+13. **LibriSpeech** — https://www.openslr.org/12 (CC BY 4.0), Panayotov et al., ICASSP 2015.
